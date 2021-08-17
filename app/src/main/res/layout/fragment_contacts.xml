@@ -25,8 +25,23 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_select_contact"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/margin_small"
+        app:layout_constraintBottom_toTopOf="@id/btnSelectContacts"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:layout_width="0dp"
+        android:id="@+id/btnSelectContacts"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Добавить в список SOS"
+        android:textAllCaps="false"
+        android:backgroundTint="#4CA852"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

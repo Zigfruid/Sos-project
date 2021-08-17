@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SOS</string>
     <string name="contacts">Контакты</string>
+    <string name="permission_is_required">Чтобы полноценно работать в этой окне, нужны специальные разрешение. В настройке этой приложении дайте специальные разрешение.</string>
+    <string name="permission_required_title">Разрешение</string>
+    <string name="cancel">Отмена</string>
+    <string name="go_to_settings">Настройки</string>
 </resources>

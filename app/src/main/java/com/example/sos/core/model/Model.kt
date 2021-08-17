@@ -1,3 +1,3 @@
 package com.example.sos.core.model
 
-data class Model(val name:String, val number:String)
+data class Model(var name:String, var number:String)

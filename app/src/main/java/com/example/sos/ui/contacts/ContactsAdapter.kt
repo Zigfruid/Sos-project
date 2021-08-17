@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
 import com.example.sos.core.inflate
 import com.example.sos.core.model.Contact
+import com.example.sos.core.model.Model
+import com.example.sos.core.onClick
 import com.example.sos.databinding.ItemSelectContactBinding
 
 class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
 
-    private var models = listOf<Contact>()
+    var models = listOf<Contact>()
     set(value) {
         field = value
         notifyDataSetChanged()
@@ -21,6 +23,11 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.apply {
                 tvName.text = contact.name
                 tvNumber.text = contact.number
+                checkbox.isChecked = contact.isSelected
+            }
+            binding.root.onClick {
+                contact.isSelected=!contact.isSelected
+                binding.checkbox.isChecked = contact.isSelected
             }
         }
     }
