@@ -1,4 +1,4 @@
-package com.example.sos.core.model
+package com.example.sos.core.remote
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -3,10 +3,9 @@ package com.example.sos.ui.contacts
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
-import com.example.sos.core.inflate
-import com.example.sos.core.model.Contact
-import com.example.sos.core.model.Model
-import com.example.sos.core.onClick
+import com.example.sos.core.extentions.inflate
+import com.example.sos.core.remote.Contact
+import com.example.sos.core.extentions.onClick
 import com.example.sos.databinding.ItemSelectContactBinding
 
 class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
@@ -32,8 +31,6 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.root.onClick {
                 contact.isSelected=!contact.isSelected
                 binding.checkbox.isChecked = contact.isSelected
-            }
-            if (contact.isSelected){
                 onClickItem.invoke(contact)
             }
         }

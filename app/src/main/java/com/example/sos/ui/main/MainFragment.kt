@@ -10,6 +10,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -20,18 +21,25 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
-import com.example.sos.core.dp
-import com.example.sos.core.onClick
+import com.example.sos.core.extentions.dp
+import com.example.sos.core.extentions.onClick
+import com.example.sos.core.extentions.visibility
 import com.example.sos.databinding.FragmentMainBinding
 import org.koin.android.ext.android.inject
-import uz.texnopos.oneup.core.MarginItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.sos.core.extentions.MarginItemDecoration
+import com.example.sos.core.extentions.ResourceState
+import com.example.sos.ui.MainActivity
+
+
+
 
 class MainFragment: Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val adapter : MainAdapter by inject()
     private lateinit var navController: NavController
-
+    private val viewModel: MainFragmentViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,10 +58,16 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         binding.rv1.addItemDecoration(MarginItemDecoration(8.dp))
         binding.rv1.layoutManager = layoutManager
         checkForPermissions()
+        viewModel.getAllSelectedContacts()
+        setObservers()
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())
         }
 
+        adapter.setOnClickItemDelete { contact, position->
+            viewModel.deleteSelectedContact(contact)
+            adapter.deleteContact(position)
+        }
     }
 
     private val requestMultiplePermissions =
@@ -109,6 +123,24 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 )
             )
         }
+    }
+
+    private fun setObservers(){
+        viewModel.contacts.observe(viewLifecycleOwner, {
+            when(it.status){
+                ResourceState.LOADING->{
+                    binding.progressBar.visibility(true)
+                }
+                ResourceState.SUCCESS->{
+                    binding.progressBar.visibility(false)
+                    adapter.models = it.data!!
+                }
+                ResourceState.ERROR->{
+                    binding.progressBar.visibility(false)
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
 }

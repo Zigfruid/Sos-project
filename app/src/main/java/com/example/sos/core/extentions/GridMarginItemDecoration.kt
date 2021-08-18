@@ -1,4 +1,4 @@
-package uz.texnopos.oneup.core
+package com.example.sos.core.extentions
 
 import android.graphics.Rect
 import android.view.View

@@ -1,4 +1,4 @@
-package uz.texnopos.oneup.core
+package com.example.sos.core.extentions
 
 open class Resource<out T> constructor(val status: ResourceState, val data: T?, val message: String?) {
 

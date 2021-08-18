@@ -1,4 +1,4 @@
-package com.example.sos.core
+package com.example.sos.core.extentions
 
 import android.content.Context
 import android.content.res.Resources

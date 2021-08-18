@@ -9,13 +9,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
-import com.example.sos.core.dp
-import com.example.sos.core.model.Contact
-import com.example.sos.core.onClick
+import com.example.sos.core.extentions.dp
+import com.example.sos.core.remote.Contact
+import com.example.sos.core.extentions.onClick
 import com.example.sos.databinding.FragmentContactsBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import uz.texnopos.oneup.core.MarginItemDecoration
+import com.example.sos.core.extentions.MarginItemDecoration
 
 class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
 
@@ -24,6 +24,7 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
     private val adapter: ContactsAdapter by inject()
     private val viewModel: ContactsViewModel by viewModel()
     private lateinit var navController:NavController
+    private val selectedContactList= mutableListOf<Contact>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,10 +50,13 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
             contactList.add(Contact(i+1,list[i].getValue("Name").toString(),list[i].getValue("Number").toString(), false) )
         }
         adapter.models = contactList
+
+        adapter.setOnClickItem {contact->
+            selectedContactList.add(contact)
+        }
+
         binding.btnSelectContacts.onClick {
-            adapter.setOnClickItem {contact->
-                viewModel.getSelectedContacts(contact)
-            }
+            viewModel.setSelectedContacts(selectedContactList)
             navController.popBackStack()
         }
     }
