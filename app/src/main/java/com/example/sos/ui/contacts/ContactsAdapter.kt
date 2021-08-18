@@ -17,6 +17,10 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
         notifyDataSetChanged()
     }
 
+    private var onClickItem:(list:Contact) -> Unit = {}
+    fun setOnClickItem(onClickItem:(list:Contact)->Unit){
+        this.onClickItem=onClickItem
+    }
     
     inner class ContactsViewHolder(private val binding: ItemSelectContactBinding): RecyclerView.ViewHolder(binding.root){
         fun populateModel(contact: Contact){
@@ -28,6 +32,9 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.root.onClick {
                 contact.isSelected=!contact.isSelected
                 binding.checkbox.isChecked = contact.isSelected
+            }
+            if (contact.isSelected){
+                onClickItem.invoke(contact)
             }
         }
     }

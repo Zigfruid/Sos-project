@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
 import com.example.sos.core.dp
 import com.example.sos.core.model.Contact
-import com.example.sos.core.model.Model
+import com.example.sos.core.onClick
 import com.example.sos.databinding.FragmentContactsBinding
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import uz.texnopos.oneup.core.MarginItemDecoration
 
 class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
@@ -20,6 +22,8 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
     private var _binding:FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val adapter: ContactsAdapter by inject()
+    private val viewModel: ContactsViewModel by viewModel()
+    private lateinit var navController:NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,7 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController=Navigation.findNavController(view)
         binding.apply {
             rvContacts.adapter = adapter
             val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -44,7 +49,12 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
             contactList.add(Contact(i+1,list[i].getValue("Name").toString(),list[i].getValue("Number").toString(), false) )
         }
         adapter.models = contactList
-
+        binding.btnSelectContacts.onClick {
+            adapter.setOnClickItem {contact->
+                viewModel.getSelectedContacts(contact)
+            }
+            navController.popBackStack()
+        }
     }
 
 }
