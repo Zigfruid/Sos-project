@@ -12,6 +12,7 @@ object SMSHelper {
     var cnt = 0
     var context: Context? = null
     var numbers: MutableList<String> = mutableListOf()
+    var text:String=""
 
 
     fun send() {
@@ -23,7 +24,7 @@ object SMSHelper {
             val sms = SmsManager.getDefault()
             sentPendingIntents.add(sentPI)
             val mSMSMessage: ArrayList<String> = sms.
-            divideMessage("Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение : ")
+            divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
 

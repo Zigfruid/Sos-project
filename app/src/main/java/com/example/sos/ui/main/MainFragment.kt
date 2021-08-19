@@ -115,12 +115,27 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 requireContext(),
                 Manifest.permission.SEND_SMS
             ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                    requireContext(),
+        Manifest.permission.ACCESS_NETWORK_STATE
+        ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestMultiplePermissions.launch(
                 arrayOf(
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    Manifest.permission.SEND_SMS
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
                 )
             )
         }
@@ -135,11 +150,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 ResourceState.SUCCESS->{
                     binding.progressBar.visibility(false)
                     adapter.models = it.data!!
-//                    val list = mutableListOf<String>()
-//                    it.data.forEach { contact ->
-//                        list.add(contact.number)
-//                    }
-//                    viewModel.sendSms(list)
                 }
                 ResourceState.ERROR->{
                     binding.progressBar.visibility(false)
