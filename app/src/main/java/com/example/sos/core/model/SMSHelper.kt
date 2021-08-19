@@ -26,10 +26,7 @@ object SMSHelper {
             divideMessage("Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение : ")
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
-            if (cnt == numbers.size){
-                cnt = 0
-                numbers.clear()
-            }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ScreenReceiver : BroadcastReceiver() {
+    var isReadyToSend = false
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
@@ -30,9 +31,9 @@ class ScreenReceiver : BroadcastReceiver() {
             Log.e("Lob","timer started")
         }
         if (wasScreenOn==3){
-
             timer.cancel()
             wasScreenOn=0
+            isReadyToSend = true
             Log.e("LOB", "таймер остановлен")
         }
     }
@@ -41,7 +42,7 @@ class ScreenReceiver : BroadcastReceiver() {
         var wasScreenOn = 0
     }
 
-    private val timer = object : CountDownTimer(1500 , 1000){
+    private val timer = object : CountDownTimer(3000 , 1000){
         override fun onTick(p0: Long) {
         }
         override fun onFinish() {

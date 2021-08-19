@@ -135,11 +135,11 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 ResourceState.SUCCESS->{
                     binding.progressBar.visibility(false)
                     adapter.models = it.data!!
-                    val list = mutableListOf<String>()
-                    it.data.forEach { contact ->
-                        list.add(contact.number)
-                    }
-                    viewModel.sendSms(list)
+//                    val list = mutableListOf<String>()
+//                    it.data.forEach { contact ->
+//                        list.add(contact.number)
+//                    }
+//                    viewModel.sendSms(list)
                 }
                 ResourceState.ERROR->{
                     binding.progressBar.visibility(false)

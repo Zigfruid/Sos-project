@@ -55,8 +55,8 @@ class MainFragmentViewModel(private val dao:ContactDao):ViewModel() {
         )
     }
 
-    fun sendSms(numbers:MutableList<String>){
-        SMSHelper.numbers = numbers
-        SMSHelper.send()
-    }
+//    fun sendSms(numbers:MutableList<String>){
+//        SMSHelper.numbers = numbers
+//        SMSHelper.send()
+//    }
 }
