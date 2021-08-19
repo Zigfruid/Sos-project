@@ -29,6 +29,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.sos.core.extentions.MarginItemDecoration
 import com.example.sos.core.extentions.ResourceState
+import com.example.sos.core.remote.Contact
 import com.example.sos.ui.MainActivity
 
 
@@ -134,6 +135,11 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 ResourceState.SUCCESS->{
                     binding.progressBar.visibility(false)
                     adapter.models = it.data!!
+                    val list = mutableListOf<String>()
+                    it.data.forEach { contact ->
+                        list.add(contact.number)
+                    }
+                    viewModel.sendSms(list)
                 }
                 ResourceState.ERROR->{
                     binding.progressBar.visibility(false)

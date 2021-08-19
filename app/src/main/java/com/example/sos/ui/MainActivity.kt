@@ -9,12 +9,16 @@ import androidx.core.content.ContextCompat
 import com.example.sos.R
 import com.example.sos.service.Actions
 import com.example.sos.service.MyService
+import com.example.sos.service.LockService
+
+
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startService(Intent(this, MyService::class.java))
+        startService(Intent(applicationContext, LockService::class.java))
     }
 
 }

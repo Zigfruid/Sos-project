@@ -14,10 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOS">
-        <service
-            android:name=".service.MyService"
-            android:enabled="true"
-            android:exported="true" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
@@ -27,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.example.sos.service.LockService" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
