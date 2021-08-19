@@ -16,8 +16,8 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
         notifyDataSetChanged()
     }
 
-    private var onClickItem:(list:Contact) -> Unit = {}
-    fun setOnClickItem(onClickItem:(list:Contact)->Unit){
+    private var onClickItem:(list:Contact, isSelected: Boolean) -> Unit = {_, _ ->}
+    fun setOnClickItem(onClickItem:(list:Contact, isSelected: Boolean)->Unit){
         this.onClickItem=onClickItem
     }
     
@@ -31,7 +31,13 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.root.onClick {
                 contact.isSelected=!contact.isSelected
                 binding.checkbox.isChecked = contact.isSelected
-                onClickItem.invoke(contact)
+            }
+            binding.checkbox.setOnCheckedChangeListener { compoundButton, b ->
+                if (b) {
+                    onClickItem.invoke(contact, true)
+                } else {
+                    onClickItem.invoke(contact, false)
+                }
             }
         }
     }

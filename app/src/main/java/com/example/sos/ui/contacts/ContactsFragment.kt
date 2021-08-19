@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.sos.core.extentions.MarginItemDecoration
 
-class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
+class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
 
     private var _binding:FragmentContactsBinding? = null
     private val binding get() = _binding!!
@@ -51,8 +51,12 @@ class FragmentContacts : GetContacts(R.layout.fragment_contacts) {
         }
         adapter.models = contactList
 
-        adapter.setOnClickItem {contact->
-            selectedContactList.add(contact)
+        adapter.setOnClickItem {contact, isSelected->
+            if (isSelected) {
+                selectedContactList.add(contact)
+            } else {
+                selectedContactList.remove(contact)
+            }
         }
 
         binding.btnSelectContacts.onClick {

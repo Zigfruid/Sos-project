@@ -4,7 +4,7 @@ import android.database.Cursor
 import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 
-abstract class GetContacts(viewResId: Int) : Fragment(viewResId) {
+abstract class ContactHelper(viewResId: Int) : Fragment(viewResId) {
 
     private lateinit var storeContacts:ArrayList<Map<String,String>>
 

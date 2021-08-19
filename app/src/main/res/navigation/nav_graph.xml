@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/fragmentContacts"
         tools:layout="@layout/fragment_contacts"
-        android:name="com.example.sos.ui.contacts.FragmentContacts"
+        android:name="com.example.sos.ui.contacts.ContactsFragment"
         android:label="FragmentContacts" />
 </navigation>
