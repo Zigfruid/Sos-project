@@ -1,12 +1,19 @@
 package com.example.sos.ui.main
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,19 +27,16 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sos.BuildConfig
 import com.example.sos.R
-import com.example.sos.core.extentions.dp
-import com.example.sos.core.extentions.onClick
-import com.example.sos.core.extentions.visibility
+import com.example.sos.core.extentions.*
 import com.example.sos.databinding.FragmentMainBinding
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.sos.core.extentions.MarginItemDecoration
-import com.example.sos.core.extentions.ResourceState
-import com.example.sos.core.remote.Contact
-import com.example.sos.ui.MainActivity
-
-
+import java.util.*
 
 
 class MainFragment: Fragment(R.layout.fragment_main) {
@@ -41,6 +45,12 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private val adapter : MainAdapter by inject()
     private lateinit var navController: NavController
     private val viewModel: MainFragmentViewModel by viewModel()
+    private var selectedLanguage = ""
+    private val locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 10000
+        fastestInterval = 5000 / 2
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,6 +71,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         checkForPermissions()
         viewModel.getAllSelectedContacts()
         setObservers()
+        checkGpsStatus()
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())
         }
@@ -68,6 +79,46 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         adapter.setOnClickItemDelete { contact, position->
             viewModel.deleteSelectedContact(contact)
             adapter.deleteContact(position)
+        }
+        binding.btnSettings.onClick {
+            val dialog = AlertDialog.Builder(requireContext())
+            val points = arrayOf(getString(R.string.change_language), getString(R.string.information))
+            dialog.setTitle(getString(R.string.settings))
+            dialog.setItems(points){_,which->
+                when(which){
+                    0->{
+                        dialog.setTitle(getString(R.string.change_language))
+                        val languages = arrayOf(getString(R.string.russian_language),
+                            getString(R.string.karakalpak_language),
+                            getString(R.string.uzbek_language),
+                            getString(R.string.english_language))
+                        dialog.setSingleChoiceItems(languages,0) { _, i ->
+                            selectedLanguage = languages[i]
+                        }
+                    }
+                    1->{
+                        dialog.setTitle(getString(R.string.information))
+                        dialog.setMessage(getString(R.string.information_message))
+                    }
+                }
+            }
+            dialog.show()
+        }
+
+        binding.btnShare.onClick {
+            try {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.type = "text/plain"
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "SOS")
+                var shareMessage = "\nLet me recommend you this application\n\n"
+                shareMessage =
+                    """
+                    ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID.toString()}
+                    """.trimIndent()
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+                startActivity(Intent.createChooser(shareIntent, "choose one"))
+            } catch (e: Exception) {
+            }
         }
     }
 
@@ -77,7 +128,9 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             permissions.entries.forEach {
                 if (!it.value) isGranted = false
             }
-            if (!isGranted) {
+            if (isGranted) {
+
+            }else{
                 showDialog()
             }
         }
@@ -109,10 +162,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                requireContext(),
                 Manifest.permission.SEND_SMS
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
@@ -131,7 +180,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             requestMultiplePermissions.launch(
                 arrayOf(
                     Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                     Manifest.permission.SEND_SMS,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -157,6 +205,54 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 }
             }
         })
+    }
+// fun without refreshing activity change language
+
+    fun setLocale(lang: String?) {
+       val myLocale = Locale(lang)
+        val res: Resources = resources
+        val dm: DisplayMetrics = res.displayMetrics
+        val conf: Configuration = res.configuration
+        conf.locale = myLocale
+        res.updateConfiguration(conf, dm)
+        onConfigurationChanged(conf)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.locale === Locale.ENGLISH) {
+            Toast.makeText(requireContext(), "English", Toast.LENGTH_SHORT).show()
+        } else if (newConfig.locale === Locale.FRENCH) {
+            Toast.makeText(requireContext(), "French", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkGpsStatus() {
+        val settingsClient: SettingsClient = LocationServices.getSettingsClient(requireActivity())
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        val locationManager =
+            activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationSettingsRequest: LocationSettingsRequest = builder.build()
+        builder.setAlwaysShow(true)
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            settingsClient
+                .checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener(context as Activity) {
+
+                }
+                .addOnFailureListener(requireActivity()) { e ->
+                    when ((e as ApiException).statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
+                            try {
+                                val rae = e as ResolvableApiException
+                                rae.startResolutionForResult(requireActivity(), 101)
+                            } catch (sie: IntentSender.SendIntentException) {
+                            }
+                    }
+                }
+        }
     }
 
 }

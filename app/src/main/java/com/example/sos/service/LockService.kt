@@ -1,22 +1,29 @@
 package com.example.sos.service
 
 import android.Manifest
+import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.CountDownTimer
 import android.os.IBinder
 import android.os.PowerManager
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.SMSHelper.context
 import com.example.sos.core.remote.ContactDao
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -26,6 +33,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.lang.Exception
+import java.util.*
 
 
 open class LockService : Service(),LocationListener{
@@ -72,6 +80,8 @@ open class LockService : Service(),LocationListener{
             }
         }
     }
+
+
     private val compositeDisposable = CompositeDisposable()
     private fun getContactFromDb() {
             compositeDisposable.add(
@@ -85,28 +95,21 @@ open class LockService : Service(),LocationListener{
                             }
                             context = this
                             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-                            if (locationManager != null) {
-                                if (ActivityCompat.checkSelfPermission(
-                                        this,
-                                        Manifest.permission.ACCESS_FINE_LOCATION
-                                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                                        this,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION
-                                    ) != PackageManager.PERMISSION_GRANTED
-                                ) {
-                                    return@subscribe
-                                }
-                                locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+                            if (ActivityCompat.checkSelfPermission(
+                                    this,
+                                    Manifest.permission.ACCESS_FINE_LOCATION
+                                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                    this,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION
+                                ) != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                return@subscribe
                             }
-                            if (locationManager != null) {
+                            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
                                 locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-                            }
                             SMSHelper.text = "Вы мой экстренный контакт. Мне нужна помощь." +
                                     "Вот мое примерное местоположение:https://www.google.com/maps/dir/$lat,$long"
                             if (mReceiver.isReadyToSend) {
-//                            Handler().postDelayed({
-//                                SMSHelper.send()
-//                            }, 3000)
                                 SMSHelper.send()
                             }
                         },

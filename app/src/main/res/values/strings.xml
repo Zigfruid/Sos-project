@@ -5,4 +5,14 @@
     <string name="permission_required_title">Разрешение</string>
     <string name="cancel">Отмена</string>
     <string name="go_to_settings">Настройки</string>
+    <string name="change_language">Сменить язык</string>
+    <string name="information">Информация</string>
+    <string name="settings">Настройки</string>
+    <string name="russian_language">Русский</string>
+    <string name="karakalpak_language">Qaraqalpaq</string>
+    <string name="uzbek_language">Uzbek</string>
+    <string name="english_language">English</string>
+    <string name="information_message">Пожалуйста перезагрузите телефон чтобы отключить отправку СМС и местоположение</string>
+    <string name="back">Назад</string>
+    <string name="ok">Ok</string>
 </resources>

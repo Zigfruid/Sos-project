@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.CountDownTimer
 import android.telephony.SmsManager
 import com.example.sos.core.broadcast.SmsSentReceiver
 
@@ -13,7 +14,6 @@ object SMSHelper {
     var context: Context? = null
     var numbers: MutableList<String> = mutableListOf()
     var text:String=""
-
 
     fun send() {
         val sentPendingIntents = ArrayList<PendingIntent>()
@@ -27,7 +27,6 @@ object SMSHelper {
             divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
