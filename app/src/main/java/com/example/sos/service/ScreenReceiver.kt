@@ -48,6 +48,7 @@ class ScreenReceiver : BroadcastReceiver() {
         override fun onFinish() {
             Log.e("LOB","time is over")
             wasScreenOn=0
+
         }
     }
 }

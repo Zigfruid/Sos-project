@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.telephony.SmsManager
+import android.util.Log
 import android.widget.Toast
 import com.example.sos.core.model.SMSHelper
+import com.example.sos.service.ScreenReceiver
 
 class SmsSentReceiver: BroadcastReceiver() {
+    private val broadcast = ScreenReceiver()
     override fun onReceive(context: Context?, intent: Intent?) {
         when (resultCode) {
             Activity.RESULT_OK -> {
@@ -17,15 +20,15 @@ class SmsSentReceiver: BroadcastReceiver() {
                 Toast.makeText(context, "Sms ketti", Toast.LENGTH_SHORT).show()
             }
             SmsManager.RESULT_ERROR_GENERIC_FAILURE -> {
-                //            SMSHelper.send()
+                timer.start()
                 Toast.makeText(context, "Sms ketti", Toast.LENGTH_SHORT).show()
             }
             SmsManager.RESULT_ERROR_NO_SERVICE -> {
-                //              SMSHelper.send()
+                timer.start()
                 Toast.makeText(context, "Sms ketti", Toast.LENGTH_SHORT).show()
             }
             SmsManager.RESULT_ERROR_NULL_PDU -> {
-//                SMSHelper.send()
+                timer.start()
                 Toast.makeText(context, "Sms ketti", Toast.LENGTH_SHORT).show()
             }
             else -> {
@@ -33,8 +36,9 @@ class SmsSentReceiver: BroadcastReceiver() {
         }
     }
 
-    private val timer = object : CountDownTimer(15000, 1000) {
+    private val timer = object : CountDownTimer(300000, 1000) {
         override fun onTick(p0: Long) {
+            Log.e("LOB", "Time : ${p0/1000}")
         }
 
         override fun onFinish() {

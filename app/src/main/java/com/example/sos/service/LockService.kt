@@ -111,6 +111,7 @@ open class LockService : Service(),LocationListener{
                                     "Вот мое примерное местоположение:https://www.google.com/maps/dir/$lat,$long"
                             if (mReceiver.isReadyToSend) {
                                 SMSHelper.send()
+                                mReceiver.isReadyToSend = false
                             }
                         },
                         {
