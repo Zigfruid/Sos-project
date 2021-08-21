@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SOS</string>
+    <string name="contacts">Kontaktlar</string>
+    <string name="permission_is_required">Bu oynada toliq ishlash uchun sizga maxsus ruxsat zurur. Bu qo\'shimchani sozlamada maxsus ruxsat bering.</string>
+    <string name="permission_required_title">Ruxsat</string>
+    <string name="cancel">"Bekor etish "</string>
+    <string name="go_to_settings">Sozalamalar</string>
+    <string name="change_language">"Til almashtirish "</string>
+    <string name="information">"Axborot "</string>
+    <string name="settings">Sozalamalar</string>
+    <string name="russian_language">Русский</string>
+    <string name="karakalpak_language">Qaraqalpaq</string>
+    <string name="uzbek_language">Uzbek</string>
+    <string name="english_language">English</string>
+    <string name="information_message">SMS yuborishlikdi va lokatciyanı o\'chirish uchun telefoningizni takroriy o\'chirib jaǵıń</string>
+    <string name="back">"Ortga "</string>
+    <string name="ok">Ok</string>
+</resources>

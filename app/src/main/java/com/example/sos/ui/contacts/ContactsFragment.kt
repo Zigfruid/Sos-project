@@ -58,6 +58,9 @@ class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
                 selectedContactList.remove(contact)
             }
         }
+        binding.btnBack.onClick {
+            navController.popBackStack()
+        }
 
         binding.btnSelectContacts.onClick {
             viewModel.setSelectedContacts(selectedContactList)

@@ -1,27 +1,18 @@
 package com.example.sos.ui.main
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -30,13 +21,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.BuildConfig
 import com.example.sos.R
 import com.example.sos.core.extentions.*
+import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentMainBinding
+import com.example.sos.ui.MainActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 
 class MainFragment: Fragment(R.layout.fragment_main) {
@@ -46,6 +38,9 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private lateinit var navController: NavController
     private val viewModel: MainFragmentViewModel by viewModel()
     private var selectedLanguage = ""
+    private val settings: Settings by inject()
+    var itemPosition = 0
+
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
         fastestInterval = 5000 / 2
@@ -68,7 +63,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rv1.addItemDecoration(MarginItemDecoration(8.dp))
         binding.rv1.layoutManager = layoutManager
-        checkForPermissions()
         viewModel.getAllSelectedContacts()
         setObservers()
         checkGpsStatus()
@@ -87,18 +81,51 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             dialog.setItems(points){_,which->
                 when(which){
                     0->{
-                        dialog.setTitle(getString(R.string.change_language))
+                        val dialogLanguages = AlertDialog.Builder(requireContext())
+                        dialogLanguages.setTitle(getString(R.string.change_language))
                         val languages = arrayOf(getString(R.string.russian_language),
                             getString(R.string.karakalpak_language),
                             getString(R.string.uzbek_language),
                             getString(R.string.english_language))
-                        dialog.setSingleChoiceItems(languages,0) { _, i ->
+                        dialogLanguages.setSingleChoiceItems(languages,settings.getPosition()) { _, i ->
                             selectedLanguage = languages[i]
+                            settings.setPosition(i)
+
                         }
+                        dialogLanguages.setPositiveButton("Ok"){ d, _->
+                            when(selectedLanguage){
+                                getString(R.string.russian_language) ->{
+                                    settings.setLanguage("ru")
+                                    setLocale()
+                                    settings.setFirstLanguageSelected()
+                                }
+                                getString(R.string.karakalpak_language) ->{
+                                    settings.setLanguage("kaa")
+                                    setLocale()
+                                    settings.setFirstLanguageSelected()
+                                }
+                                getString(R.string.uzbek_language) ->{
+                                    settings.setLanguage("uz")
+                                    setLocale()
+                                    settings.setFirstLanguageSelected()
+                                }
+                                getString(R.string.english_language) ->{
+                                    settings.setLanguage("en")
+                                    setLocale()
+                                    settings.setFirstLanguageSelected()
+                                }
+                            }
+                        }
+                        dialogLanguages.show()
                     }
                     1->{
-                        dialog.setTitle(getString(R.string.information))
-                        dialog.setMessage(getString(R.string.information_message))
+                        val dialogInfo = AlertDialog.Builder(requireContext())
+                        dialogInfo.setTitle(getString(R.string.information))
+                        dialogInfo.setMessage(getString(R.string.information_message))
+                        dialogInfo.setPositiveButton("OK"){d, _->
+                            d.dismiss()
+                        }
+                        dialogInfo.show()
                     }
                 }
             }
@@ -122,73 +149,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
     }
 
-    private val requestMultiplePermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            var isGranted = true
-            permissions.entries.forEach {
-                if (!it.value) isGranted = false
-            }
-            if (isGranted) {
-
-            }else{
-                showDialog()
-            }
-        }
-
-
-    private fun showDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.apply {
-            setMessage(getString(R.string.permission_is_required))
-            setTitle(getString(R.string.permission_required_title))
-            setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri: Uri = Uri.fromParts("package", activity?.packageName, null)
-                intent.data = uri
-                startActivity(intent)
-            }
-        }.create().show()
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun checkForPermissions() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_CONTACTS
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.SEND_SMS
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                    requireContext(),
-        Manifest.permission.ACCESS_NETWORK_STATE
-        ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestMultiplePermissions.launch(
-                arrayOf(
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-                )
-            )
-        }
-    }
-
     private fun setObservers(){
         viewModel.contacts.observe(viewLifecycleOwner, {
             when(it.status){
@@ -206,27 +166,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             }
         })
     }
-// fun without refreshing activity change language
-
-    fun setLocale(lang: String?) {
-       val myLocale = Locale(lang)
-        val res: Resources = resources
-        val dm: DisplayMetrics = res.displayMetrics
-        val conf: Configuration = res.configuration
-        conf.locale = myLocale
-        res.updateConfiguration(conf, dm)
-        onConfigurationChanged(conf)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (newConfig.locale === Locale.ENGLISH) {
-            Toast.makeText(requireContext(), "English", Toast.LENGTH_SHORT).show()
-        } else if (newConfig.locale === Locale.FRENCH) {
-            Toast.makeText(requireContext(), "French", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun checkGpsStatus() {
         val settingsClient: SettingsClient = LocationServices.getSettingsClient(requireActivity())
         val builder = LocationSettingsRequest.Builder()
@@ -253,6 +192,17 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                     }
                 }
         }
+    }
+
+    private fun setLocale() {
+        val refresh = Intent(
+            requireContext(),
+            MainActivity::class.java
+        )
+        refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(refresh)
     }
 
 }
