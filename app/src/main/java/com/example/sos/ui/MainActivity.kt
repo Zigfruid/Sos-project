@@ -21,6 +21,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private val settings: com.example.sos.core.model.Settings by inject()
     lateinit var locale: Locale
+    var isGranted = true
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setLocale()
         checkForPermissions()
+        if (isGranted) {
+            startService(Intent(applicationContext, LockService::class.java))
+        }else{
+            showDialog()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        startService(Intent(applicationContext, LockService::class.java))
     }
 
     private fun setLocale() {
@@ -42,7 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            var isGranted = true
             permissions.entries.forEach {
                 if (!it.value) isGranted = false
             }

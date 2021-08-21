@@ -36,7 +36,7 @@ class SmsSentReceiver: BroadcastReceiver() {
         }
     }
 
-    private val timer = object : CountDownTimer(300000, 1000) {
+    private val timer = object : CountDownTimer(10000, 1000) {
         override fun onTick(p0: Long) {
             Log.e("LOB", "Time : ${p0/1000}")
         }
