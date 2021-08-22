@@ -32,7 +32,11 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </service>
-        <receiver android:name=".service.ScreenReceiver" />
+        <receiver android:enabled="true" android:exported="true" android:name=".service.ScreenReceiver" >
+            <intent-filter>
+                <action android:name="BackgroundProcess"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".core.broadcast.SmsSentReceiver" />
     </application>
 

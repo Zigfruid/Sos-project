@@ -39,7 +39,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel: MainFragmentViewModel by viewModel()
     private var selectedLanguage = ""
     private val settings: Settings by inject()
-    var itemPosition = 0
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000

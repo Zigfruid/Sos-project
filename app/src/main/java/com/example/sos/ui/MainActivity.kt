@@ -1,6 +1,9 @@
 package com.example.sos.ui
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,8 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.sos.R
 import com.example.sos.service.LockService
+import com.example.sos.service.ScreenReceiver
 import org.koin.android.ext.android.inject
 import java.util.*
+import android.app.ActivityManager
+import android.util.Log
+import com.example.sos.core.broadcast.RestartService
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        startBackgroundProcess()
         startService(Intent(applicationContext, LockService::class.java))
     }
 
@@ -62,6 +70,17 @@ class MainActivity : AppCompatActivity() {
                 showDialog()
             }
         }
+
+
+
+    private fun startBackgroundProcess(){
+        val intent = Intent(this,ScreenReceiver::class.java)
+        intent.action = "BackgroundProcess"
+        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,0,10,pendingIntent)
+        finish()
+    }
 
 
     private fun showDialog() {
@@ -115,5 +134,4 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
-
 }
