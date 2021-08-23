@@ -55,15 +55,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (adapter.models.isNotEmpty() && isSelected){
-            binding.tvDescription.visibility = View.GONE
-        }else{
-            binding.tvDescription.visibility = View.VISIBLE
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,6 +73,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         adapter.setOnClickItemDelete { contact, position->
             viewModel.deleteSelectedContact(contact)
             adapter.deleteContact(position)
+            setObservers()
         }
         binding.btnSettings.onClick {
             val dialog = AlertDialog.Builder(requireContext())
@@ -166,6 +158,11 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 }
                 ResourceState.SUCCESS->{
                     binding.progressBar.visibility(false)
+                    if (it.data!!.isNotEmpty()){
+                        binding.tvDescription.visibility = View.GONE
+                    }else{
+                        binding.tvDescription.visibility = View.VISIBLE
+                    }
                     adapter.models = it.data!!
                     isSelected = true
                 }
