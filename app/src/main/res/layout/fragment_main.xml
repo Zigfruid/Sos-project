@@ -66,10 +66,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/rv1"
-        tools:listitem="@layout/item_contact"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/gd1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_large"
+        android:textSize="21dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

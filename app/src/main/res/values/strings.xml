@@ -15,4 +15,6 @@
     <string name="information_message">Пожалуйста перезагрузите телефон чтобы отключить отправку СМС и местоположение</string>
     <string name="back">Назад</string>
     <string name="ok">Ok</string>
+    <string name="description">Вы еще не добавили экстренных контактов нажмите на кнопку + и добавьте</string>
+    <string name="select_contact">Вы еще не выбрали контакта</string>
 </resources>

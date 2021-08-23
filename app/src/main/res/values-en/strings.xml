@@ -16,4 +16,6 @@
     <string name="information_message">Please restart your phone to disable SMS sending and location</string>
     <string name="back">back</string>
     <string name="ok">Ok</string>
+    <string name="description">You have not added emergency contacts yet, click + button and add them</string>
+    <string name="select_contact">You haven\'t been choose contact</string>
 </resources>

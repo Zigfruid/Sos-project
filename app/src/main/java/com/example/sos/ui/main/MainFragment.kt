@@ -39,6 +39,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private val viewModel: MainFragmentViewModel by viewModel()
     private var selectedLanguage = ""
     private val settings: Settings by inject()
+    var isSelected = false
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
@@ -52,6 +53,15 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     ): View {
         _binding = FragmentMainBinding.inflate(layoutInflater, container , false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (adapter.models.isNotEmpty() && isSelected){
+            binding.tvDescription.visibility = View.GONE
+        }else{
+            binding.tvDescription.visibility = View.VISIBLE
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -157,6 +167,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 ResourceState.SUCCESS->{
                     binding.progressBar.visibility(false)
                     adapter.models = it.data!!
+                    isSelected = true
                 }
                 ResourceState.ERROR->{
                     binding.progressBar.visibility(false)

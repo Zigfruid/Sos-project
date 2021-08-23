@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.example.sos.databinding.FragmentContactsBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.sos.core.extentions.MarginItemDecoration
+import com.example.sos.ui.main.MainFragment
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -85,8 +87,15 @@ class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
         }
 
         binding.btnSelectContacts.onClick {
-            viewModel.setSelectedContacts(selectedContactList)
-            navController.popBackStack()
+            if (selectedContactList.isNotEmpty()){
+                val mainFragment = MainFragment()
+                viewModel.setSelectedContacts(selectedContactList)
+                navController.popBackStack()
+                mainFragment.isSelected = true
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.select_contact), Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 

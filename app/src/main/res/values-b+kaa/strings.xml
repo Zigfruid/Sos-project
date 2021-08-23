@@ -16,4 +16,6 @@
     <string name="information_message">SMS jiberiwdi hám lokatciyanı óshiriw ushın telefonıńızdı qayta óshirip jaǵıń</string>
     <string name="back">artqa</string>
     <string name="ok">Ok</string>
+    <string name="description">Siz ele ekstrenniy kontaktlardı qospaǵansiz qosıw ushın + tuymesine basıń</string>
+    <string name="select_contact">Siz ele kontakt saylamadiniz</string>
 </resources>
