@@ -49,7 +49,6 @@ open class LockService: Service(),LocationListener{
         filter.addAction(Intent.ACTION_USER_PRESENT)
         registerReceiver(mReceiver, filter)
         startService()
-        startTimer()
         return START_STICKY
 
     }
@@ -75,30 +74,10 @@ open class LockService: Service(),LocationListener{
     override fun onDestroy() {
         super.onDestroy()
         val broadcastIntent = Intent()
-        stoptimertask()
         broadcastIntent.action = "restartservice"
         broadcastIntent.setClass(this, RestartService::class.java)
         this.sendBroadcast(broadcastIntent)
 
-    }
-
-    private var timer: Timer? = null
-    private var timerTask: TimerTask? = null
-    open fun startTimer() {
-        timer = Timer()
-        timerTask = object : TimerTask() {
-            override fun run() {
-               // Log.i("Count", "=========  " + counter++)
-            }
-        }
-        timer!!.schedule(timerTask, 1000, 1000) //
-    }
-
-    open fun stoptimertask() {
-        if (timer != null) {
-            timer!!.cancel()
-            timer = null
-        }
     }
 
 

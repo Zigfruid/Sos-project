@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".App"
@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SOS">
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
@@ -26,15 +27,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.example.sos.service.LockService"
-            android:exported="false">
+
+        <service
+            android:name=".service.LockService"
+            android:exported="false"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </service>
-        <receiver android:enabled="true" android:exported="true" android:name=".service.ScreenReceiver" >
+
+        <receiver
+            android:name=".service.ScreenReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="BackgroundProcess"/>
+                <action android:name="BackgroundProcess" />
             </intent-filter>
         </receiver>
         <receiver android:name=".core.broadcast.SmsSentReceiver" />

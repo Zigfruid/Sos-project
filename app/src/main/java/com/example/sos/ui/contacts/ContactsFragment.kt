@@ -1,6 +1,8 @@
 package com.example.sos.ui.contacts
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ import com.example.sos.databinding.FragmentContactsBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.sos.core.extentions.MarginItemDecoration
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
 
@@ -49,8 +53,26 @@ class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
         for (i in 0 until list.size){
             contactList.add(Contact(i+1,list[i].getValue("Name").toString(),list[i].getValue("Number").toString(), false) )
         }
-        adapter.models = contactList
+        binding.etSearchText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                p0?.let {
+                    if (it.isEmpty()) {
+                        adapter.models = adapter.allModel
+                    } else {
+                        filter(it.toString())
+                    }
+                }
+            }
+
+        })
+        contactList.sortBy { it.name }
+        adapter.allModel = contactList
         adapter.setOnClickItem {contact, isSelected->
             if (isSelected) {
                 selectedContactList.add(contact)
@@ -68,4 +90,15 @@ class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
         }
     }
 
+    private fun filter(text: String) {
+        val filteredListName: ArrayList<Contact> = ArrayList()
+        for (eachName in adapter.allModel) {
+            if (eachName.name.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+                filteredListName.add(eachName)
+            }
+        }
+        adapter.filterList(filteredListName)
+    }
 }

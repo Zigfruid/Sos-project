@@ -1,5 +1,6 @@
 package com.example.sos.ui.contacts
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
@@ -13,6 +14,13 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
     var models = listOf<Contact>()
     set(value) {
         field = value
+        notifyDataSetChanged()
+    }
+
+    var allModel: List<Contact> = listOf()
+    set(value) {
+        field = value
+        models = value
         notifyDataSetChanged()
     }
 
@@ -32,7 +40,7 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
                 contact.isSelected=!contact.isSelected
                 binding.checkbox.isChecked = contact.isSelected
             }
-            binding.checkbox.setOnCheckedChangeListener { compoundButton, b ->
+            binding.checkbox.setOnCheckedChangeListener { _, b ->
                 if (b) {
                     onClickItem.invoke(contact, true)
                 } else {
@@ -54,5 +62,9 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
 
     override fun getItemCount(): Int = models.size
 
-    
+
+    fun filterList(filteredListName: MutableList<Contact>) {
+        models = filteredListName
+        notifyDataSetChanged()
+    }
 }
