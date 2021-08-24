@@ -23,8 +23,7 @@ object SMSHelper {
         try {
             val sms = SmsManager.getDefault()
             sentPendingIntents.add(sentPI)
-            val mSMSMessage: ArrayList<String> = sms.
-            divideMessage(text)
+            val mSMSMessage: ArrayList<String> = sms.divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
         } catch (e: Exception) {

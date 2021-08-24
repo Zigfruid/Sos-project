@@ -12,7 +12,6 @@ import com.example.sos.core.model.SMSHelper
 import com.example.sos.service.ScreenReceiver
 
 class SmsSentReceiver: BroadcastReceiver() {
-    private val broadcast = ScreenReceiver()
     override fun onReceive(context: Context?, intent: Intent?) {
         when (resultCode) {
             Activity.RESULT_OK -> {

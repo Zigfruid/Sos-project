@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.BuildConfig
 import com.example.sos.R
 import com.example.sos.core.extentions.*
+import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentMainBinding
 import com.example.sos.ui.MainActivity
@@ -73,6 +74,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         adapter.setOnClickItemDelete { contact, position->
             viewModel.deleteSelectedContact(contact)
             adapter.deleteContact(position)
+            SMSHelper.numbers.remove(contact.number)
             setObservers()
         }
         binding.btnSettings.onClick {
@@ -93,7 +95,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                             settings.setPosition(i)
 
                         }
-                        dialogLanguages.setPositiveButton("Ok"){ d, _->
+                        dialogLanguages.setPositiveButton("Ok"){ _, _->
                             when(selectedLanguage){
                                 getString(R.string.russian_language) ->{
                                     settings.setLanguage("ru")
@@ -141,7 +143,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 var shareMessage = "\nLet me recommend you this application\n\n"
                 shareMessage =
                     """
-                    ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID.toString()}
+                    ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
                     """.trimIndent()
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
                 startActivity(Intent.createChooser(shareIntent, "choose one"))
@@ -163,7 +165,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                     }else{
                         binding.tvDescription.visibility = View.VISIBLE
                     }
-                    adapter.models = it.data!!
+                    adapter.models = it.data
                     isSelected = true
                 }
                 ResourceState.ERROR->{
