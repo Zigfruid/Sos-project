@@ -1,10 +1,8 @@
 package com.example.sos.service
 
 import android.Manifest
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.annotation.SuppressLint
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -12,15 +10,18 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.*
-import android.util.Log
+import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.example.sos.R
-import com.example.sos.core.broadcast.RestartService
+import com.example.sos.core.broadcast.ScreenReceiver
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.SMSHelper.context
 import com.example.sos.core.remote.ContactDao
@@ -48,6 +49,7 @@ open class LockService: Service(),LocationListener{
     private lateinit var mNotifyManager: NotificationManager
     private lateinit var mBuilder: NotificationCompat.Builder
     private lateinit var notification: Notification
+    private var isServiceStarted = false
 
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -62,7 +64,6 @@ open class LockService: Service(),LocationListener{
         registerReceiver(mReceiver, filter)
         startService()
         return START_STICKY
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -73,13 +74,15 @@ open class LockService: Service(),LocationListener{
     }
 
     private fun startService() {
+        if (isServiceStarted) return
+        Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
+        isServiceStarted = true
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LockService::lock").apply {
                     acquire(5 * 60 * 1000L /*5 minutes*/)
                 }
             }
-        Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
         GlobalScope.launch(Dispatchers.IO) {
             while (true) {
                 launch(Dispatchers.IO) {
@@ -89,16 +92,6 @@ open class LockService: Service(),LocationListener{
             }
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, RestartService::class.java)
-        this.sendBroadcast(broadcastIntent)
-
-    }
-
 
     private val compositeDisposable = CompositeDisposable()
     private fun getContactFromDb() {
@@ -188,5 +181,19 @@ open class LockService: Service(),LocationListener{
             notification = builder.build()
             startForeground(notificationId, notification)
         }
+    }
+
+    @SuppressLint("UnspecifiedImmutableFlag")
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        val restartServiceIntent = Intent(applicationContext, LockService::class.java).also {
+            it.setPackage(packageName)
+        }
+        val restartServicePendingIntent: PendingIntent = PendingIntent
+            .getService(this, 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT)
+        applicationContext.getSystemService(Context.ALARM_SERVICE)
+        val alarmService: AlarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePendingIntent)
+
     }
 }

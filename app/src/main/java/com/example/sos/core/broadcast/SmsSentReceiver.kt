@@ -9,7 +9,6 @@ import android.telephony.SmsManager
 import android.util.Log
 import android.widget.Toast
 import com.example.sos.core.model.SMSHelper
-import com.example.sos.service.ScreenReceiver
 
 class SmsSentReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

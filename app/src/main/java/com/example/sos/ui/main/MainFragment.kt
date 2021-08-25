@@ -42,11 +42,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private val settings: Settings by inject()
     var isSelected = false
 
-    private val locationRequest: LocationRequest = LocationRequest.create().apply {
-        interval = 10000
-        fastestInterval = 5000 / 2
-        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,8 +61,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         binding.rv1.layoutManager = layoutManager
         viewModel.getAllSelectedContacts()
         setObservers()
-        checkGpsStatus()
-        requireContext().bindService(Intent(requireContext(), LockService::class.java), serviceConnection, Context.BIND_AUTO_CREATE)
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())
         }
@@ -153,16 +146,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
     }
 
-    private val serviceConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            Toast.makeText(requireContext(), "Service connected", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onServiceDisconnected(className: ComponentName) {
-            requireContext().startService(Intent(requireContext(), LockService::class.java))
-        }
-    }
-
 
     private fun setObservers(){
         viewModel.contacts.observe(viewLifecycleOwner, {
@@ -186,33 +169,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 }
             }
         })
-    }
-    private fun checkGpsStatus() {
-        val settingsClient: SettingsClient = LocationServices.getSettingsClient(requireActivity())
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        val locationManager =
-            activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val locationSettingsRequest: LocationSettingsRequest = builder.build()
-        builder.setAlwaysShow(true)
-
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            settingsClient
-                .checkLocationSettings(locationSettingsRequest)
-                .addOnSuccessListener(context as Activity) {
-
-                }
-                .addOnFailureListener(requireActivity()) { e ->
-                    when ((e as ApiException).statusCode) {
-                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
-                            try {
-                                val rae = e as ResolvableApiException
-                                rae.startResolutionForResult(requireActivity(), 101)
-                            } catch (sie: IntentSender.SendIntentException) {
-                            }
-                    }
-                }
-        }
     }
 
     private fun setLocale() {

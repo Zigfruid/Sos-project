@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".App"
@@ -38,7 +40,7 @@
         </service>
 
         <receiver
-            android:name=".service.ScreenReceiver"
+            android:name=".core.broadcast.ScreenReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -46,7 +48,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".core.broadcast.SmsSentReceiver" />
-        <receiver android:name=".core.broadcast.RestartService" />
     </application>
 
 </manifest>

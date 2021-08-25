@@ -1,15 +1,19 @@
 package com.example.sos.ui
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -17,19 +21,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.sos.R
 import com.example.sos.service.LockService
-import com.example.sos.service.ScreenReceiver
+import com.example.sos.core.broadcast.ScreenReceiver
 import org.koin.android.ext.android.inject
 import java.util.*
-import android.app.ActivityManager
-import android.util.Log
-import com.example.sos.core.broadcast.RestartService
 import com.example.sos.service.Actions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 
 
 class MainActivity : AppCompatActivity() {
     private val settings: com.example.sos.core.model.Settings by inject()
     lateinit var locale: Locale
     var isGranted = true
+    private val locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 10000
+        fastestInterval = 5000 / 2
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setLocale()
         checkForPermissions()
         if (isGranted) {
-            actionOnService(Actions.START)
+            checkGpsStatus()
         }else{
             showDialog()
         }
@@ -46,10 +55,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onDestroy() {
-        super.onDestroy()
-        startBackgroundProcess()
-        actionOnService(Actions.START)
+    private fun checkGpsStatus() {
+        val settingsClient: SettingsClient = LocationServices.getSettingsClient(this)
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        val locationManager =
+            this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationSettingsRequest: LocationSettingsRequest = builder.build()
+        builder.setAlwaysShow(true)
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            settingsClient
+                .checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener(this) {
+                }
+                .addOnFailureListener(this) { e ->
+                    when ((e as ApiException).statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
+                            try {
+                                val rae = e as ResolvableApiException
+                                rae.startResolutionForResult(this, 101)
+                            } catch (sie: IntentSender.SendIntentException) {
+                        }
+
+                    }
+                }
+        }
     }
 
     private fun setLocale() {
@@ -73,18 +103,6 @@ class MainActivity : AppCompatActivity() {
                 showDialog()
             }
         }
-
-
-
-    private fun startBackgroundProcess(){
-        val intent = Intent(this,ScreenReceiver::class.java)
-        intent.action = "BackgroundProcess"
-        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,0,10,pendingIntent)
-        finish()
-    }
-
 
     private fun showDialog() {
         val builder = AlertDialog.Builder(this)
