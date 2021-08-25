@@ -7,13 +7,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#191919</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
 
-<!--    <color name="primaryColor">#bbc7dd</color>-->
-<!--    <color name="primaryLightColor">#eefaff</color>-->
-<!--    <color name="primaryDarkColor">#8b96ab</color>-->
-<!--    <color name="secondaryColor">#4f5e78</color>-->
-<!--    <color name="secondaryLightColor">#7c8ba7</color>-->
-<!--    <color name="secondaryDarkColor">#25354c</color>-->
-<!--    <color name="primaryTextColor">#191919</color>-->
-<!--    <color name="secondaryTextColor">#ffffff</color>-->
+    <!--    <color name="primaryColor">#bbc7dd</color>-->
+    <!--    <color name="primaryLightColor">#eefaff</color>-->
+    <!--    <color name="primaryDarkColor">#8b96ab</color>-->
+    <!--    <color name="secondaryColor">#4f5e78</color>-->
+    <!--    <color name="secondaryLightColor">#7c8ba7</color>-->
+    <!--    <color name="secondaryDarkColor">#25354c</color>-->
+    <!--    <color name="primaryTextColor">#191919</color>-->
+    <!--    <color name="secondaryTextColor">#ffffff</color>-->
 </resources>

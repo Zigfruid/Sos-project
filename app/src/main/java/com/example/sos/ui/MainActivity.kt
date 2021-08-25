@@ -23,6 +23,7 @@ import java.util.*
 import android.app.ActivityManager
 import android.util.Log
 import com.example.sos.core.broadcast.RestartService
+import com.example.sos.service.Actions
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,16 +38,18 @@ class MainActivity : AppCompatActivity() {
         setLocale()
         checkForPermissions()
         if (isGranted) {
-            startService(Intent(applicationContext, LockService::class.java))
+            actionOnService(Actions.START)
         }else{
             showDialog()
         }
+
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDestroy() {
         super.onDestroy()
         startBackgroundProcess()
-        startService(Intent(applicationContext, LockService::class.java))
+        actionOnService(Actions.START)
     }
 
     private fun setLocale() {
@@ -132,6 +135,18 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_NETWORK_STATE,
                 )
             )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun actionOnService(actions: Actions) {
+        Intent(this, LockService::class.java).also { int ->
+            int.action = actions.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(this, int)
+                return
+            }
+                startService(int)
         }
     }
 }

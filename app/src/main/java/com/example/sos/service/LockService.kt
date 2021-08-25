@@ -1,6 +1,9 @@
 package com.example.sos.service
 
 import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -12,7 +15,11 @@ import android.location.LocationManager
 import android.os.*
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.sos.R
 import com.example.sos.core.broadcast.RestartService
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.SMSHelper.context
@@ -36,6 +43,11 @@ open class LockService: Service(),LocationListener{
     var long=""
     var lat=""
     private var locationManager: LocationManager? = null
+    private val CHANNEL_ID = "channel_id_example_01"
+    private val notificationId = 101
+    private lateinit var mNotifyManager: NotificationManager
+    private lateinit var mBuilder: NotificationCompat.Builder
+    private lateinit var notification: Notification
 
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -50,6 +62,13 @@ open class LockService: Service(),LocationListener{
         registerReceiver(mReceiver, filter)
         startService()
         return START_STICKY
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate() {
+        super.onCreate()
+        notificationChannel()
 
     }
 
@@ -127,6 +146,47 @@ open class LockService: Service(),LocationListener{
             long = location.longitude.toString()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun notificationChannel() {
+        if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
+            val name = "SOS"
+            val descriptor = "Работает в фоновом режиме"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptor
+            }
+            mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mNotifyManager.createNotificationChannel(channel)
+
+            mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            mBuilder.setContentTitle(getString(R.string.app_name))
+                .setContentText("Приложение работает в фоновом режиме")
+                .setSmallIcon(android.R.drawable.radiobutton_on_background)
+                .setOngoing(true)
+            notification = mBuilder.build()
+            mNotifyManager.notify(notificationId, mBuilder.build())
+            startForeground(notificationId, notification)
+        } else {
+            notifications()
+        }
+    }
+
+    private fun notifications() {
+        if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
+            mBuilder.setContentTitle(getString(R.string.app_name))
+                .setContentText("Приложение работает в фоновом режиме")
+            mNotifyManager.notify(notificationId, mBuilder.build())
+            startForeground(notificationId, notification)
+        } else {
+            mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val builder: Notification.Builder = Notification.Builder(this)
+            builder.setContentTitle(getString(R.string.app_name))
+                .setContentText("Приложение работает в фоновом режиме")
+            notification = builder.build()
+            startForeground(notificationId, notification)
         }
     }
 }

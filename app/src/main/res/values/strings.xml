@@ -17,4 +17,8 @@
     <string name="ok">Ok</string>
     <string name="description">Вы еще не добавили экстренных контактов нажмите на кнопку + и добавьте</string>
     <string name="select_contact">Вы еще не выбрали контакта</string>
+    <string name="appwidget_text" translatable="false">SOS widget</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="app_widget_description" translatable="false">This is an app widget description</string>
+    <string name="bacground_work">Работает в фоновом режиме</string>
 </resources>

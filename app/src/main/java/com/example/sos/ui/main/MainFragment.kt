@@ -1,12 +1,11 @@
 package com.example.sos.ui.main
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.IntentSender
+import android.content.*
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import com.example.sos.core.extentions.*
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentMainBinding
+import com.example.sos.service.LockService
 import com.example.sos.ui.MainActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
@@ -67,6 +67,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         viewModel.getAllSelectedContacts()
         setObservers()
         checkGpsStatus()
+        requireContext().bindService(Intent(requireContext(), LockService::class.java), serviceConnection, Context.BIND_AUTO_CREATE)
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())
         }
@@ -151,6 +152,17 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             }
         }
     }
+
+    private val serviceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            Toast.makeText(requireContext(), "Service connected", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onServiceDisconnected(className: ComponentName) {
+            requireContext().startService(Intent(requireContext(), LockService::class.java))
+        }
+    }
+
 
     private fun setObservers(){
         viewModel.contacts.observe(viewLifecycleOwner, {

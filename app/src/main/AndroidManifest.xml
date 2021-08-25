@@ -46,6 +46,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".core.broadcast.SmsSentReceiver" />
+        <receiver android:name=".core.broadcast.RestartService" />
     </application>
 
 </manifest>
