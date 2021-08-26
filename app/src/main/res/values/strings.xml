@@ -21,4 +21,5 @@
     <string name="add_widget" translatable="false">Add widget</string>
     <string name="app_widget_description" translatable="false">This is an app widget description</string>
     <string name="bacground_work">Работает в фоновом режиме</string>
+    <string name="sms_text">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/%1$s,%2$s</string>
 </resources>

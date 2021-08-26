@@ -163,10 +163,7 @@ open class LockService: Service(){
                             ) {
                                 return@subscribe
                             }
-//                            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-//                                locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-                            SMSHelper.text = "Вы мой экстренный контакт. Мне нужна помощь." +
-                                    "Вот мое примерное местоположение:https://www.google.com/maps/dir/$lat,$long"
+                            SMSHelper.text = getString(R.string.sms_text,lat,long)
                             if (mReceiver.isReadyToSend) {
                                 SMSHelper.send()
                                 mReceiver.isReadyToSend = false
@@ -184,7 +181,7 @@ open class LockService: Service(){
     fun notificationChannel() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
             val name = "SOS"
-            val descriptor = "Работает в фоновом режиме"
+            val descriptor = getString(R.string.bacground_work)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptor
@@ -194,7 +191,7 @@ open class LockService: Service(){
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText("Приложение работает в фоновом режиме")
+                .setContentText(getString(R.string.bacground_work))
                 .setSmallIcon(android.R.drawable.radiobutton_on_background)
                 .setOngoing(true)
             notification = mBuilder.build()
@@ -208,14 +205,14 @@ open class LockService: Service(){
     private fun notifications() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
             mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText("Приложение работает в фоновом режиме")
+                .setContentText(getString(R.string.bacground_work))
             mNotifyManager.notify(notificationId, mBuilder.build())
             startForeground(notificationId, notification)
         } else {
             mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val builder: Notification.Builder = Notification.Builder(this)
             builder.setContentTitle(getString(R.string.app_name))
-                .setContentText("Приложение работает в фоновом режиме")
+                .setContentText(getString(R.string.bacground_work))
             notification = builder.build()
             startForeground(notificationId, notification)
         }

@@ -18,4 +18,6 @@
     <string name="ok">Ok</string>
     <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshich uchun + tugmasiga bosing</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
+    <string name="bacground_work">Fonda ishlayapti</string>
+    <string name="sms_text">Siz mening favqulodda aloqam. Menga yordam kerak. Mana mening taxminiy joylashuvim: https://www.google.com/maps/dir/%1$s,%2$s</string>
 </resources>
