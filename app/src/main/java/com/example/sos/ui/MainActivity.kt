@@ -1,9 +1,6 @@
 package com.example.sos.ui
 
 import android.Manifest
-import android.app.Activity
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -13,26 +10,24 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.sos.R
-import com.example.sos.service.LockService
-import com.example.sos.core.broadcast.ScreenReceiver
-import org.koin.android.ext.android.inject
-import java.util.*
 import com.example.sos.service.Actions
+import com.example.sos.service.LockService
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
+import org.koin.android.ext.android.inject
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val settings: com.example.sos.core.model.Settings by inject()
-    lateinit var locale: Locale
+    private lateinit var locale: Locale
     var isGranted = true
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
@@ -48,10 +43,10 @@ class MainActivity : AppCompatActivity() {
         checkForPermissions()
         if (isGranted) {
             checkGpsStatus()
-        }else{
+            actionOnService(Actions.START)
+        } else {
             showDialog()
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

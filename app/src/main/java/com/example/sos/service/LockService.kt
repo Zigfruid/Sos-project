@@ -34,9 +34,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.*
+import com.example.sos.ui.MainActivity
+
+import android.os.Bundle
 
 
-open class LockService: Service(),LocationListener{
+
+
+
+open class LockService: Service(){
 
     private val dao: ContactDao by inject()
     private var wakeLock: PowerManager.WakeLock? = null
@@ -73,10 +79,51 @@ open class LockService: Service(),LocationListener{
 
     }
 
+    fun getLocation(){
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationListener: LocationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                try {
+                    lat = location.latitude.toString()
+                    long = location.longitude.toString()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onProviderEnabled( provider: String) {
+              //  Toast.makeText(this, "pro", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onProviderDisabled( provider: String) {
+//                println("DEBUG 3")
+//                 Toast.makeText(this, "onProviderDisabled", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+//                println("DEBUG 4")
+//                Toast.makeText(this, "onStatusChanged", Toast.LENGTH_LONG).show()
+            }
+        }
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0.5f, locationListener)
+        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 0.5f, locationListener)
+    }
+
     private fun startService() {
         if (isServiceStarted) return
         Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
+        getLocation()
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LockService::lock").apply {
@@ -116,8 +163,8 @@ open class LockService: Service(),LocationListener{
                             ) {
                                 return@subscribe
                             }
-                            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-                                locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+//                            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+//                                locationManager!!.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
                             SMSHelper.text = "Вы мой экстренный контакт. Мне нужна помощь." +
                                     "Вот мое примерное местоположение:https://www.google.com/maps/dir/$lat,$long"
                             if (mReceiver.isReadyToSend) {
@@ -132,15 +179,6 @@ open class LockService: Service(),LocationListener{
                     )
             )
         }
-
-    override fun onLocationChanged(location: Location) {
-        try {
-            lat = location.latitude.toString()
-            long = location.longitude.toString()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun notificationChannel() {
@@ -196,4 +234,6 @@ open class LockService: Service(),LocationListener{
         alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePendingIntent)
 
     }
+
+
 }
