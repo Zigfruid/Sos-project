@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.BuildConfig
 import com.example.sos.R
+import com.example.sos.core.broadcast.ScreenReceiver
 import com.example.sos.core.extentions.*
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
@@ -41,6 +42,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private var selectedLanguage = ""
     private val settings: Settings by inject()
     var isSelected = false
+    private val mReceiver= ScreenReceiver()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +75,8 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
         binding.btnSettings.onClick {
             val dialog = AlertDialog.Builder(requireContext())
-            val points = arrayOf(getString(R.string.change_language), getString(R.string.information))
+            val points = arrayOf(getString(R.string.change_language), getString(R.string.information),getString(
+                            R.string.stop_sent_sms))
             dialog.setTitle(getString(R.string.settings))
             dialog.setItems(points){_,which->
                 when(which){
@@ -123,6 +126,18 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                             d.dismiss()
                         }
                         dialogInfo.show()
+                    }
+                    2->{
+                        val dialogStopSentSms = AlertDialog.Builder(requireContext())
+                        dialogStopSentSms.setMessage(getString(R.string.sms_stop_dialog))
+                        dialogStopSentSms.setPositiveButton(getString(R.string.yes)){ d, _->
+                            mReceiver.isReadyToSend=false
+                            d.dismiss()
+                        }
+                        dialogStopSentSms.setNegativeButton(getString(R.string.no)){ d, _->
+                            d.dismiss()
+                        }
+                        dialogStopSentSms.show()
                     }
                 }
             }

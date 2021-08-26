@@ -20,4 +20,8 @@
     <string name="select_contact">You haven\'t been choose contact</string>
     <string name="bacground_work">Works in the background</string>
     <string name="sms_text">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/%1$s,%2$s</string>
+    <string name="stop_sent_sms">Disable SMS mailing</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="sms_stop_dialog">Do you really want to stop sending SMS messages?</string>
 </resources>

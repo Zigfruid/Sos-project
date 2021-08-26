@@ -20,4 +20,8 @@
     <string name="select_contact">Siz ele kontakt saylamadiniz</string>
     <string name="bacground_work">Fonda islep atır</string>
     <string name="sms_text">Siz meniń ayrıqsha baylanısm. Maǵan járdem kerek. Mine meniń shamalıq jaylasıwım : https://www.google.com/maps/dir/%1$s,%2$s</string>
+    <string name="stop_sent_sms">SMS-xabardı óshirip qoyıng</string>
+    <string name="yes">Awa</string>
+    <string name="no">Joq</string>
+    <string name="sms_stop_dialog">Siz, álbette, SMS-xabardı toqtatıwchimisiz?</string>
 </resources>
