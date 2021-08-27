@@ -20,10 +20,11 @@
     <string name="appwidget_text" translatable="false">SOS widget</string>
     <string name="add_widget" translatable="false">Add widget</string>
     <string name="app_widget_description" translatable="false">This is an app widget description</string>
-    <string name="bacground_work">Работает в фоновом режиме</string>
+    <string name="background_work">Работает в фоновом режиме</string>
     <string name="sms_text">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/%1$s,%2$s</string>
     <string name="stop_sent_sms">Отключить СМС рассылку</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="sms_stop_dialog">Вы действительно хотите остановить СМС-рассылку?</string>
+    <string name="warning">Включите GPS или мобильный интернет, без этого приложение не будет работать!</string>
 </resources>

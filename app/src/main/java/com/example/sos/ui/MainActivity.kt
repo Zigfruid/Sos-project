@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     private val settings: com.example.sos.core.model.Settings by inject()
     private lateinit var locale: Locale
     var isGranted = true
+    private val service = LockService()
+
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
         fastestInterval = 5000 / 2
@@ -50,7 +52,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun checkGpsStatus() {
+    override fun onStart() {
+        super.onStart()
+        service.setGPSOff {connect ->
+            if (!connect){
+                checkGpsStatus()
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun checkGpsStatus() {
         val settingsClient: SettingsClient = LocationServices.getSettingsClient(this)
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
