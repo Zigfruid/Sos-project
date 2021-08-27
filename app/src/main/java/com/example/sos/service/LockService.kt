@@ -37,9 +37,12 @@ import java.util.*
 import com.example.sos.ui.MainActivity
 
 import android.os.Bundle
+import android.os.VibrationEffect
 
+import android.os.Build
 
-
+import android.os.Vibrator
+import com.example.sos.di.viewModelModule
 
 
 open class LockService: Service(){
@@ -91,19 +94,6 @@ open class LockService: Service(){
                 }
             }
 
-            override fun onProviderEnabled( provider: String) {
-              //  Toast.makeText(this, "pro", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onProviderDisabled( provider: String) {
-//                println("DEBUG 3")
-//                 Toast.makeText(this, "onProviderDisabled", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-//                println("DEBUG 4")
-//                Toast.makeText(this, "onStatusChanged", Toast.LENGTH_LONG).show()
-            }
         }
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -165,6 +155,12 @@ open class LockService: Service(){
                             }
                             SMSHelper.text = getString(R.string.sms_text,lat,long)
                             if (mReceiver.isReadyToSend) {
+                                val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+                                } else {
+                                    v.vibrate(500)
+                                }
                                 SMSHelper.send()
                                 mReceiver.isReadyToSend = false
                             }

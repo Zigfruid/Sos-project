@@ -20,8 +20,8 @@
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
     <string name="bacground_work">Fonda ishlayapti</string>
     <string name="sms_text">Siz mening favqulodda aloqam. Menga yordam kerak. Mana mening taxminiy joylashuvim: https://www.google.com/maps/dir/%1$s,%2$s</string>
-    <string name="stop_sent_sms">SMS-xabarni o\'chirib qo'ying</string>
+    <string name="stop_sent_sms">SMS-xabarni ochirib qoying</string>
     <string name="yes">Ha</string>
-    <string name="no">Yo\'q</string>
-    <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni to\'xtatmoqchimisiz?</string>
+    <string name="no">Yoq</string>
+    <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni toxtatmoqchimisiz?</string>
 </resources>

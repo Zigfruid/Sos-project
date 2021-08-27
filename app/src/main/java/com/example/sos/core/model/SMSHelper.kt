@@ -14,6 +14,7 @@ object SMSHelper {
     var context: Context? = null
     var numbers: MutableList<String> = mutableListOf()
     var text:String=""
+    var stopSendSms=false
 
     fun send() {
         val sentPendingIntents = ArrayList<PendingIntent>()

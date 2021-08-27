@@ -1,11 +1,8 @@
 package com.example.sos.ui.main
 
-import android.app.Activity
 import android.content.*
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,13 +21,17 @@ import com.example.sos.core.extentions.*
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentMainBinding
-import com.example.sos.service.LockService
 import com.example.sos.ui.MainActivity
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.os.VibrationEffect
+
+import androidx.core.content.ContextCompat.getSystemService
+
+import android.os.Vibrator
+import androidx.core.content.ContextCompat
 
 
 class MainFragment: Fragment(R.layout.fragment_main) {
@@ -42,7 +43,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private var selectedLanguage = ""
     private val settings: Settings by inject()
     var isSelected = false
-    private val mReceiver= ScreenReceiver()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,7 +131,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         val dialogStopSentSms = AlertDialog.Builder(requireContext())
                         dialogStopSentSms.setMessage(getString(R.string.sms_stop_dialog))
                         dialogStopSentSms.setPositiveButton(getString(R.string.yes)){ d, _->
-                            mReceiver.isReadyToSend=false
+                            SMSHelper.stopSendSms=true
                             d.dismiss()
                         }
                         dialogStopSentSms.setNegativeButton(getString(R.string.no)){ d, _->

@@ -6,10 +6,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
+import com.example.sos.core.model.SMSHelper
 
 
 class ScreenReceiver : BroadcastReceiver() {
     var isReadyToSend = false
+    var wasScreenOn = 0
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
@@ -29,13 +31,10 @@ class ScreenReceiver : BroadcastReceiver() {
         if (wasScreenOn ==3){
             timer.cancel()
             wasScreenOn =0
+            SMSHelper.stopSendSms=false
             isReadyToSend = true
             Log.e("LOB", "таймер остановлен")
         }
-    }
-
-    companion object {
-        var wasScreenOn = 0
     }
 
     private val timer = object : CountDownTimer(3000 , 1000){
@@ -44,7 +43,6 @@ class ScreenReceiver : BroadcastReceiver() {
         override fun onFinish() {
             Log.e("LOB","time is over")
             wasScreenOn =0
-
         }
     }
 

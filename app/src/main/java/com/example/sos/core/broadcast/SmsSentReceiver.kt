@@ -34,13 +34,17 @@ class SmsSentReceiver: BroadcastReceiver() {
         }
     }
 
-    private val timer = object : CountDownTimer(10000, 1000) {
+    private val timer = object : CountDownTimer(60000, 1000) {
         override fun onTick(p0: Long) {
             Log.e("LOB", "Time : ${p0/1000}")
         }
 
         override fun onFinish() {
-            SMSHelper.send()
+            Log.e("LOB", "Time : ${SMSHelper.stopSendSms}")
+            if(!SMSHelper.stopSendSms){
+                SMSHelper.send()
+                
+            }
         }
     }
 }
