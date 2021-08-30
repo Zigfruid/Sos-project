@@ -1,4 +1,4 @@
-package uz.texnopos.oneup.ui.service
+package com.example.sos.service
 
 import android.content.Context
 import android.content.SharedPreferences

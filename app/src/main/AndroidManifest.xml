@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".App"
@@ -33,11 +34,9 @@
 
         <service
             android:name=".service.LockService"
-            android:exported="false"
+            android:enabled="true"
             android:stopWithTask="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
+
         </service>
 
         <receiver
@@ -49,6 +48,11 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".core.broadcast.SmsSentReceiver" />
+        <receiver android:name=".core.broadcast.StartReceiver" android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

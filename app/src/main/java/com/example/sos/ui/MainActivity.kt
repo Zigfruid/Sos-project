@@ -1,6 +1,8 @@
 package com.example.sos.ui
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.sos.R
+import com.example.sos.core.broadcast.ScreenReceiver
 import com.example.sos.service.Actions
 import com.example.sos.service.LockService
 import com.google.android.gms.common.api.ApiException
@@ -23,6 +26,10 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import java.util.*
+import android.content.DialogInterface
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,9 +53,40 @@ class MainActivity : AppCompatActivity() {
         if (isGranted) {
             checkGpsStatus()
             actionOnService(Actions.START)
+            //overlay top of other apps try this Batka
+
+
+//            if (!Settings.canDrawOverlays(this)) {
+//                AlertDialog.Builder(this)
+//                    .setTitle("Permission Request")
+//                    .setMessage("This app needs your permission to overlay the system apps")
+//                    .setPositiveButton(
+//                        "Open settings"
+//                    ) { _, _ ->
+//                        val myIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+//                        startActivityForResult(myIntent, 101)
+//                    }
+//                    .setNegativeButton(android.R.string.no, null)
+//                    .show()
+//            }
+
         } else {
             showDialog()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        startBackgroundProcess()
+    }
+
+    private fun startBackgroundProcess(){
+        val intent = Intent(this, ScreenReceiver::class.java)
+        intent.action = "BackgroundProcess"
+        val pendingIntent = PendingIntent.getBroadcast(this,0,intent,0)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,0,10,pendingIntent)
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -92,9 +92,7 @@ class LockService: Service(), LocationListener{
         super.onCreate()
         notificationChannel()
         getLocation()
-
     }
-
 
     private var isConnectedGPS:(connect: Boolean) -> Unit = {_ ->}
     fun setGPSOff(isConnectedGPS:(connect: Boolean)->Unit){
@@ -155,6 +153,7 @@ class LockService: Service(), LocationListener{
         if (isServiceStarted) return
         Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
+        setServiceState(this, ServiceState.STARTED)
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LockService::lock").apply {
