@@ -75,7 +75,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
         binding.btnSettings.onClick {
             val dialog = AlertDialog.Builder(requireContext())
-            val points = arrayOf(getString(R.string.change_language), getString(R.string.information),getString(
+            val points = arrayOf(getString(R.string.change_language),getString(
                             R.string.stop_sent_sms))
             dialog.setTitle(getString(R.string.settings))
             dialog.setItems(points){_,which->
@@ -118,16 +118,8 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         }
                         dialogLanguages.show()
                     }
+
                     1->{
-                        val dialogInfo = AlertDialog.Builder(requireContext())
-                        dialogInfo.setTitle(getString(R.string.information))
-                        dialogInfo.setMessage(getString(R.string.information_message))
-                        dialogInfo.setPositiveButton("OK"){d, _->
-                            d.dismiss()
-                        }
-                        dialogInfo.show()
-                    }
-                    2->{
                         val dialogStopSentSms = AlertDialog.Builder(requireContext())
                         dialogStopSentSms.setMessage(getString(R.string.sms_stop_dialog))
                         dialogStopSentSms.setPositiveButton(getString(R.string.yes)){ d, _->

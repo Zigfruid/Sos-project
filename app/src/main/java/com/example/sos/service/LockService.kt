@@ -37,6 +37,7 @@ import android.os.Build
 
 import android.os.Vibrator
 import android.util.Log
+import com.example.sos.core.broadcast.StartReceiver
 
 
 class LockService: Service(), LocationListener{
@@ -60,7 +61,7 @@ class LockService: Service(), LocationListener{
     private var isGPSEnabled = false
     var isNetworkEnabled = false
     var isGPSTrackingEnabled = false
-    var location: Location? = null
+    private var location: Location? = null
     private var latitude = 0.0
     private var longitude = 0.0
 
@@ -76,6 +77,14 @@ class LockService: Service(), LocationListener{
         return null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        setServiceState(this, ServiceState.STOPPED)
+        val broadcastIntent = Intent()
+        broadcastIntent.action = "android.intent.action.BOOT_COMPLETED"
+        broadcastIntent.setClass(this, StartReceiver::class.java)
+        this.sendBroadcast(broadcastIntent)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -94,10 +103,6 @@ class LockService: Service(), LocationListener{
         getLocation()
     }
 
-    private var isConnectedGPS:(connect: Boolean) -> Unit = {_ ->}
-    fun setGPSOff(isConnectedGPS:(connect: Boolean)->Unit){
-        this.isConnectedGPS=isConnectedGPS
-    }
     private var provider_info: String? = null
 
     private fun getLocation() {
@@ -106,39 +111,38 @@ class LockService: Service(), LocationListener{
             isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
             isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-            if (isGPSEnabled) {
+            if (isGPSEnabled || isNetworkEnabled) {
                 isGPSTrackingEnabled = true
                 provider_info = LocationManager.GPS_PROVIDER
-            } else if (isNetworkEnabled) {
-                isGPSTrackingEnabled = true
-                 provider_info = LocationManager.NETWORK_PROVIDER
+                provider_info = LocationManager.NETWORK_PROVIDER
+
+                if (provider_info!!.isNotEmpty()) {
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        return
+                    }
+                    locationManager!!.requestLocationUpdates(
+                        provider_info!!,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(),
+                        this
+                    )
+                    if (locationManager != null) {
+                        location = locationManager!!.getLastKnownLocation(provider_info!!)
+                        updateGPSCoordinates()
+                    }
+                }
+            }
+            } catch (e: Exception) {
+                Log.e(TAG, "Impossible to connect to LocationManager", e)
             }
 
-            if (provider_info!!.isNotEmpty()) {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
-                locationManager!!.requestLocationUpdates(
-                    provider_info!!,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(),
-                    this
-                )
-                if (locationManager != null) {
-                    location = locationManager!!.getLastKnownLocation(provider_info!!)
-                    updateGPSCoordinates()
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Impossible to connect to LocationManager", e)
-        }
     }
 
     private fun updateGPSCoordinates() {
@@ -151,13 +155,13 @@ class LockService: Service(), LocationListener{
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startService() {
         if (isServiceStarted) return
-        Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
         setServiceState(this, ServiceState.STARTED)
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LockService::lock").apply {
-                    acquire(5 * 60 * 1000L /*5 minutes*/)
+                    acquire(1000L /*10 sec*/)
                 }
             }
         GlobalScope.launch(Dispatchers.IO) {
@@ -165,10 +169,85 @@ class LockService: Service(), LocationListener{
                 launch(Dispatchers.IO) {
                     getContactFromDb()
                 }
-                delay(3000L)
+                delay(1000L)
             }
         }
     }
+
+//    private fun getLocation() {
+//        try {
+//            locationManager = context!!.getSystemService(LOCATION_SERVICE) as LocationManager
+//            isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+//            isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+//            if (isNetworkEnabled) {
+//                if (ActivityCompat.checkSelfPermission(
+//                        this,
+//                        Manifest.permission.ACCESS_FINE_LOCATION
+//                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                        this,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                    ) != PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    return
+//                }
+//                locationManager!!.requestLocationUpdates(
+//                    LocationManager.NETWORK_PROVIDER,
+//                    MIN_TIME_BW_UPDATES,
+//                    10F, this
+//                )
+//                if (locationManager != null) {
+//                    if (ActivityCompat.checkSelfPermission(
+//                            this,
+//                            Manifest.permission.ACCESS_FINE_LOCATION
+//                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                            this,
+//                            Manifest.permission.ACCESS_COARSE_LOCATION
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        return
+//                    }
+//                    location =
+//                        locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+//                    if (location != null) {
+//                        latitude = location!!.latitude
+//                        longitude = location!!.longitude
+//                    }
+//                }
+//            }
+//            if (isGPSEnabled) {
+//                if (location == null) {
+//                    if (ActivityCompat.checkSelfPermission(
+//                            this,
+//                            Manifest.permission.ACCESS_FINE_LOCATION
+//                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                            this,
+//                            Manifest.permission.ACCESS_COARSE_LOCATION
+//                        ) != PackageManager.PERMISSION_GRANTED
+//                    ) {
+//                        return
+//                    }
+//                    locationManager!!.requestLocationUpdates(
+//                        LocationManager.GPS_PROVIDER,
+//                        MIN_TIME_BW_UPDATES,
+//                        10F, this
+//                    )
+//                    if (locationManager != null) {
+//                        location =
+//                            locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//                        if (location != null) {
+//                            latitude = location!!.latitude
+//                            longitude = location!!.longitude
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//            Log.e(TAG, "Impossible to connect to LocationManager", e)
+//        }
+//    }
+
+
+
 
     private val compositeDisposable = CompositeDisposable()
     @RequiresApi(Build.VERSION_CODES.O)
@@ -183,7 +262,7 @@ class LockService: Service(), LocationListener{
                                 SMSHelper.numbers.add(contact.number)
                             }
                             context = this
-                            if (isGPSTrackingEnabled) {
+                            if (latitude!=0.0 && longitude!=0.0) {
                                 locationManager =
                                     getSystemService(LOCATION_SERVICE) as LocationManager
                                 if (ActivityCompat.checkSelfPermission(
@@ -196,7 +275,11 @@ class LockService: Service(), LocationListener{
                                 ) {
                                     return@subscribe
                                 }
-                                SMSHelper.text = getString(R.string.sms_text, latitude.toString(), longitude.toString())
+                                SMSHelper.text = getString(
+                                    R.string.sms_text,
+                                    latitude.toString(),
+                                    longitude.toString()
+                                )
                                 if (mReceiver.isReadyToSend) {
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -213,8 +296,7 @@ class LockService: Service(), LocationListener{
                                     mReceiver.isReadyToSend = false
                                 }
                             }else{
-                                isConnectedGPS.invoke(false)
-                                Toast.makeText(this, getString(R.string.warning), Toast.LENGTH_SHORT).show()
+                                getLocation()
                             }
                         },
                         {

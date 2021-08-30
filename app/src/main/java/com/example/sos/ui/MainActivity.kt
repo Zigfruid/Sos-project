@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private val settings: com.example.sos.core.model.Settings by inject()
     private lateinit var locale: Locale
     var isGranted = true
-    private val service = LockService()
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
@@ -53,31 +52,16 @@ class MainActivity : AppCompatActivity() {
         if (isGranted) {
             checkGpsStatus()
             actionOnService(Actions.START)
-            //overlay top of other apps try this Batka
-
-
-//            if (!Settings.canDrawOverlays(this)) {
-//                AlertDialog.Builder(this)
-//                    .setTitle("Permission Request")
-//                    .setMessage("This app needs your permission to overlay the system apps")
-//                    .setPositiveButton(
-//                        "Open settings"
-//                    ) { _, _ ->
-//                        val myIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-//                        startActivityForResult(myIntent, 101)
-//                    }
-//                    .setNegativeButton(android.R.string.no, null)
-//                    .show()
-//            }
-
         } else {
             showDialog()
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDestroy() {
         super.onDestroy()
         startBackgroundProcess()
+        actionOnService(Actions.START)
     }
 
     private fun startBackgroundProcess(){
@@ -92,11 +76,6 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
-        service.setGPSOff {connect ->
-            if (!connect){
-                checkGpsStatus()
-            }
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
