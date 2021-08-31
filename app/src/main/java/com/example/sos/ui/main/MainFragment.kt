@@ -140,6 +140,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         }
                         dialogStopSentSms.show()
                     }
+
                 }
             }
             dialog.show()

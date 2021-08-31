@@ -13,13 +13,13 @@
     <string name="karakalpak_language">Qaraqalpaq</string>
     <string name="uzbek_language">Uzbek</string>
     <string name="english_language">English</string>
-    <string name="information_message">SMS yuborishlikdi va lokatciyanı ochirish uchun telefoningizni takroriy ochirib yoqing</string>
+    <string name="information_message">Agar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
     <string name="back">"Ortga "</string>
     <string name="ok">Ok</string>
     <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshich uchun + tugmasiga bosing</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
     <string name="background_work">Fonda ishlayapti</string>
-    <string name="sms_text">Siz mening favqulodda aloqam. Menga yordam kerak. Mana mening taxminiy joylashuvim: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">SMS-xabarni ochirib qoying</string>
     <string name="yes">Ha</string>
     <string name="no">Yoq</string>
