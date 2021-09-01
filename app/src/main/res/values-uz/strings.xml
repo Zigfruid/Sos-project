@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SOS</string>
+    <string name="contacts">Kontaktlar</string>
+    <string name="permission_is_required">Bu oynada toliq ishlash uchun sizga maxsus ruxsat zurur. Bu qo\'shimchani sozlamada maxsus ruxsat bering.</string>
+    <string name="permission_required_title">Ruxsat</string>
+    <string name="cancel">"Bekor etish "</string>
+    <string name="go_to_settings">Sozalamalar</string>
+    <string name="change_language">"Til almashtirish "</string>
+    <string name="information">"Axborot "</string>
+    <string name="settings">Sozalamalar</string>
+    <string name="russian_language">Русский</string>
+    <string name="karakalpak_language">Qaraqalpaq</string>
+    <string name="uzbek_language">Uzbek</string>
+    <string name="english_language">English</string>
+    <string name="information_message">Agar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
+    <string name="back">"Ortga "</string>
+    <string name="ok">Ok</string>
+    <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshich uchun + tugmasiga bosing</string>
+    <string name="select_contact">Siz hali kontakt saylamadingiz</string>
+    <string name="background_work">Fonda ishlayapti</string>
+    <string name="sms_text">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="stop_sent_sms">SMS-xabarni ochirib qoying</string>
+    <string name="yes">Ha</string>
+    <string name="no">Yoq</string>
+    <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni toxtatmoqchimisiz?</string>
+    <string name="warning">GPS yoki mobil internetni yoqing, bu holda dastur ishlamaydi!</string>
+</resources>
