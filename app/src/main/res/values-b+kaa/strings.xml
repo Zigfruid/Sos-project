@@ -20,9 +20,10 @@
     <string name="select_contact">Siz ele kontakt saylamadiniz</string>
     <string name="background_work">Fonda islep atır</string>
     <string name="sms_text">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
-    <string name="stop_sent_sms">SMS-xabardı óshirip qoyıng</string>
+    <string name="stop_sent_sms">Sos sms jiberiwdi toxtatiw</string>
     <string name="yes">Awa</string>
     <string name="no">Joq</string>
     <string name="sms_stop_dialog">Siz, álbette, SMS-xabardı toqtatıwchimisiz?</string>
     <string name="warning">GPS yaki mobil internetni jagin, bolmasa dastur islemeydi!</string>
+    <string name="add_contacts">Qutqariwshilar dizimin du\'ziw</string>
 </resources>

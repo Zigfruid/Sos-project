@@ -69,7 +69,7 @@
         android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Добавить в список SOS"
+        android:text="@string/add_contacts"
         android:textColor="@color/white"
         android:textAllCaps="false"
         android:backgroundTint="@color/teal_200"

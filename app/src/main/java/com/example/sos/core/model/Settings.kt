@@ -21,7 +21,7 @@ class Settings(context:Context) {
     }
 
     fun getLanguage() : String =
-            preferences.getString(LANGUAGE, "") ?: "ru"
+            preferences.getString(LANGUAGE, "") ?: "en"
 
     fun setPosition(position:Int){
         preferences.edit().putInt(POSITION, position).apply()

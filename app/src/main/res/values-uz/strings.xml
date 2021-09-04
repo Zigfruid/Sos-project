@@ -16,13 +16,14 @@
     <string name="information_message">Agar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
     <string name="back">"Ortga "</string>
     <string name="ok">Ok</string>
-    <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshich uchun + tugmasiga bosing</string>
+    <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshish uchun + tugmasiga bosing</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
     <string name="background_work">Fonda ishlayapti</string>
     <string name="sms_text">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
-    <string name="stop_sent_sms">SMS-xabarni ochirib qoying</string>
+    <string name="stop_sent_sms">Sos sms yuborishni toxtatish</string>
     <string name="yes">Ha</string>
     <string name="no">Yoq</string>
     <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni toxtatmoqchimisiz?</string>
     <string name="warning">GPS yoki mobil internetni yoqing, bu holda dastur ishlamaydi!</string>
+    <string name="add_contacts">Qutqaruvchilar ro\'yhatini tu'zish</string>
 </resources>

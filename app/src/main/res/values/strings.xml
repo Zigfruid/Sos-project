@@ -27,4 +27,5 @@
     <string name="no">Нет</string>
     <string name="sms_stop_dialog">Вы действительно хотите остановить СМС-рассылку?</string>
     <string name="warning">Включите GPS или мобильный интернет, без этого приложение не будет работать!</string>
+    <string name="add_contacts">Добавить в список SOS</string>
 </resources>
