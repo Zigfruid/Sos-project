@@ -37,7 +37,7 @@ class ScreenReceiver : BroadcastReceiver() {
         }
     }
 
-    private val timer = object : CountDownTimer(3000 , 1000){
+    private val timer = object : CountDownTimer(1700 , 1000){
         override fun onTick(p0: Long) {
         }
         override fun onFinish() {
@@ -45,5 +45,4 @@ class ScreenReceiver : BroadcastReceiver() {
             wasScreenOn =0
         }
     }
-
 }
