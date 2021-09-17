@@ -38,6 +38,22 @@ import android.os.Build
 import android.os.Vibrator
 import android.util.Log
 import com.example.sos.core.broadcast.StartReceiver
+import android.graphics.BitmapFactory
+
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+
+import android.graphics.drawable.Drawable
+import android.widget.RemoteViews
+
+
+
+
+
+
+
+
+
 
 
 class LockService: Service(), LocationListener{
@@ -310,7 +326,7 @@ class LockService: Service(), LocationListener{
     @RequiresApi(Build.VERSION_CODES.O)
     fun notificationChannel() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
-            val name = "SOS"
+            val name = "Protection enabled"
             val descriptor = getString(R.string.background_work)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
@@ -320,9 +336,9 @@ class LockService: Service(), LocationListener{
             mNotifyManager.createNotificationChannel(channel)
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
-                .setSmallIcon(android.R.drawable.radiobutton_on_background)
+            mBuilder.setContentTitle("Protection enabled")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setOngoing(true)
             notification = mBuilder.build()
             mNotifyManager.notify(notificationId, mBuilder.build())
@@ -334,15 +350,15 @@ class LockService: Service(), LocationListener{
 
     private fun notifications() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
-            mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
+            mBuilder.setContentTitle("Protection enabled")
+            //    .setContentText(getString(R.string.background_work))
             mNotifyManager.notify(notificationId, mBuilder.build())
             startForeground(notificationId, notification)
         } else {
             mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val builder: Notification.Builder = Notification.Builder(this)
-            builder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
+            builder.setContentTitle("Protection enabled")
+            //    .setContentText(getString(R.string.background_work))
             notification = builder.build()
             startForeground(notificationId, notification)
         }

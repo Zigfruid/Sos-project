@@ -94,25 +94,25 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         }
                         dialogLanguages.setPositiveButton("Ok"){ _, _->
                             when(selectedLanguage){
-                                getString(R.string.russian_language) ->{
-                                    settings.setLanguage("ru")
-                                    setLocale()
-                                    settings.setFirstLanguageSelected()
-                                }
                                 getString(R.string.karakalpak_language) ->{
                                     settings.setLanguage("kaa")
                                     setLocale()
-                                    settings.setFirstLanguageSelected()
+                                   // settings.setFirstLanguageSelected()
                                 }
                                 getString(R.string.uzbek_language) ->{
                                     settings.setLanguage("uz")
                                     setLocale()
-                                    settings.setFirstLanguageSelected()
+                                    //settings.setFirstLanguageSelected()
                                 }
                                 getString(R.string.english_language) ->{
                                     settings.setLanguage("en")
                                     setLocale()
-                                    settings.setFirstLanguageSelected()
+                                    //settings.setFirstLanguageSelected()
+                                }
+                                else-> {
+                                        settings.setLanguage("ru")
+                                        setLocale()
+                                      //  settings.setFirstLanguageSelected()
                                 }
                             }
                         }

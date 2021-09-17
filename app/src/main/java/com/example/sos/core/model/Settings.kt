@@ -26,6 +26,6 @@ class Settings(context:Context) {
     fun setPosition(position:Int){
         preferences.edit().putInt(POSITION, position).apply()
     }
-    fun getPosition() : Int = preferences.getInt(POSITION, 0)
+    fun getPosition() : Int = preferences.getInt(POSITION, 1)
 
 }
