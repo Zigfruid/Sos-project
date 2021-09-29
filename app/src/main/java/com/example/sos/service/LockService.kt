@@ -174,81 +174,6 @@ class LockService: Service(), LocationListener{
         }
     }
 
-//    private fun getLocation() {
-//        try {
-//            locationManager = context!!.getSystemService(LOCATION_SERVICE) as LocationManager
-//            isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-//            isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-//            if (isNetworkEnabled) {
-//                if (ActivityCompat.checkSelfPermission(
-//                        this,
-//                        Manifest.permission.ACCESS_FINE_LOCATION
-//                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                        this,
-//                        Manifest.permission.ACCESS_COARSE_LOCATION
-//                    ) != PackageManager.PERMISSION_GRANTED
-//                ) {
-//                    return
-//                }
-//                locationManager!!.requestLocationUpdates(
-//                    LocationManager.NETWORK_PROVIDER,
-//                    MIN_TIME_BW_UPDATES,
-//                    10F, this
-//                )
-//                if (locationManager != null) {
-//                    if (ActivityCompat.checkSelfPermission(
-//                            this,
-//                            Manifest.permission.ACCESS_FINE_LOCATION
-//                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                            this,
-//                            Manifest.permission.ACCESS_COARSE_LOCATION
-//                        ) != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        return
-//                    }
-//                    location =
-//                        locationManager!!.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-//                    if (location != null) {
-//                        latitude = location!!.latitude
-//                        longitude = location!!.longitude
-//                    }
-//                }
-//            }
-//            if (isGPSEnabled) {
-//                if (location == null) {
-//                    if (ActivityCompat.checkSelfPermission(
-//                            this,
-//                            Manifest.permission.ACCESS_FINE_LOCATION
-//                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                            this,
-//                            Manifest.permission.ACCESS_COARSE_LOCATION
-//                        ) != PackageManager.PERMISSION_GRANTED
-//                    ) {
-//                        return
-//                    }
-//                    locationManager!!.requestLocationUpdates(
-//                        LocationManager.GPS_PROVIDER,
-//                        MIN_TIME_BW_UPDATES,
-//                        10F, this
-//                    )
-//                    if (locationManager != null) {
-//                        location =
-//                            locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-//                        if (location != null) {
-//                            latitude = location!!.latitude
-//                            longitude = location!!.longitude
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (e: Exception) {
-//            Log.e(TAG, "Impossible to connect to LocationManager", e)
-//        }
-//    }
-
-
-
-
     private val compositeDisposable = CompositeDisposable()
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getContactFromDb() {
@@ -321,8 +246,7 @@ class LockService: Service(), LocationListener{
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
-                .setSmallIcon(android.R.drawable.radiobutton_on_background)
+                .setSmallIcon(R.drawable.icon_512)
                 .setOngoing(true)
             notification = mBuilder.build()
             mNotifyManager.notify(notificationId, mBuilder.build())
@@ -361,6 +285,4 @@ class LockService: Service(), LocationListener{
         alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, restartServicePendingIntent)
 
     }
-
-
 }

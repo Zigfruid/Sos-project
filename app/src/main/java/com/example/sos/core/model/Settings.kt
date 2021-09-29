@@ -9,7 +9,7 @@ class Settings(context:Context) {
         const val LANGUAGE = "currentLanguage"
         const val POSITION = "position"
     }
-    private val preferences: SharedPreferences  = context.getSharedPreferences("LanguageSharedPreferences", Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences("LanguageSharedPreferences", Context.MODE_PRIVATE)
 
 
     fun setFirstLanguageSelected() {
@@ -26,6 +26,6 @@ class Settings(context:Context) {
     fun setPosition(position:Int){
         preferences.edit().putInt(POSITION, position).apply()
     }
-    fun getPosition() : Int = preferences.getInt(POSITION, 0)
+    fun getPosition() : Int = preferences.getInt(POSITION, 3)
 
 }

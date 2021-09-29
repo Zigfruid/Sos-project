@@ -9,10 +9,6 @@
     <string name="change_language">"Til almashtirish "</string>
     <string name="information">"Axborot "</string>
     <string name="settings">Sozalamalar</string>
-    <string name="russian_language">Русский</string>
-    <string name="karakalpak_language">Qaraqalpaq</string>
-    <string name="uzbek_language">Uzbek</string>
-    <string name="english_language">English</string>
     <string name="information_message">Блоклаш тугмасини тезлик билан уч марта босиш орқали SOS хабарномасини жўнатиш амалга оширилади.\n\nAgar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
     <string name="back">"Ortga "</string>
     <string name="ok">Ok</string>
