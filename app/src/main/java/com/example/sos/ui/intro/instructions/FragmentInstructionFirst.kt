@@ -9,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.sos.R
 import com.example.sos.core.extentions.onClick
 import com.example.sos.databinding.FragmentInstructionsFirstBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.bind
 
 class FragmentInstructionFirst: Fragment(R.layout.fragment_instructions_first) {

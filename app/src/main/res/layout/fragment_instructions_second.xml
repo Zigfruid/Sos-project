@@ -5,23 +5,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text ="Second screen"
-        android:textSize="35dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:background="@drawable/back_intro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"/>
 
-    <Button
-        android:id="@+id/button"
+    <ImageView
+        android:id="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="64dp"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:src="@drawable/ic_btn_intro_back"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next" />
+        />
+
+    <TextView
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@id/buttonBack"
+        app:layout_constraintEnd_toEndOf="@id/buttonBack"
+        app:layout_constraintTop_toTopOf="@id/buttonBack"
+        app:layout_constraintBottom_toBottomOf="@id/buttonBack"
+        android:text="Next"
+        android:textSize="21dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/margin_large"
+        android:text="Skip"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="21dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

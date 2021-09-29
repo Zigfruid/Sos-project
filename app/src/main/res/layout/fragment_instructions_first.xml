@@ -5,29 +5,75 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/gd1"
-        app:layout_constraintGuide_percent="0.9"/>
-
     <ImageView
         android:layout_width="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/gd1"
-        android:background="@drawable/ic_introback"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/back_intro"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/button"
+        android:id="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="64dp"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:src="@drawable/ic_btn_intro_back"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next" />
+        />
+
+    <TextView
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@id/buttonBack"
+        app:layout_constraintEnd_toEndOf="@id/buttonBack"
+        app:layout_constraintTop_toTopOf="@id/buttonBack"
+        app:layout_constraintBottom_toBottomOf="@id/buttonBack"
+        android:text="Next"
+        android:textSize="21dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/margin_large"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo_intro"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:layout_width="250dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="21dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="This app is your assistant in emergency situations"
+        app:layout_constraintBottom_toTopOf="@id/buttonBack"
+        app:layout_constraintTop_toBottomOf="@id/logo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/margin_large"
+        android:text="Skip"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="21dp"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
