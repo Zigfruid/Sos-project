@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SOS</string>
     <string name="contacts">Contacts</string>
     <string name="permission_is_required">To work fully in this window, you need special permission. In the setting of this application, give special permission.</string>
     <string name="permission_required_title">Permission</string>
@@ -14,7 +13,6 @@
     <string name="ok">Ok</string>
     <string name="description">You have not added emergency contacts yet, click + button and add them</string>
     <string name="select_contact">You haven\'t been choose contact</string>
-    <string name="background_work">Works in the background</string>
     <string name="sms_text">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Disable SMS mailing</string>
     <string name="yes">Yes</string>

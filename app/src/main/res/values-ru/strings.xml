@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SOS</string>
     <string name="permission_is_required">Чтобы полноценно работать в этой окне, нужны специальные разрешение. В настройке этой приложении дайте специальные разрешение.</string>
     <string name="permission_required_title">Разрешение</string>
     <string name="contacts">Контакты</string>
@@ -9,20 +8,16 @@
     <string name="change_language">Сменить язык</string>
     <string name="information">Информация</string>
     <string name="settings">Настройки</string>
-    <string name="russian_language">Русский</string>
-    <string name="karakalpak_language">Qaraqalpaq</string>
-    <string name="uzbek_language">Uzbek</string>
-    <string name="english_language">English</string>
-    <string name="information_message">Если вы хотите поддержать нас, пожалуйста, свяжитесь с brighterDeeds@gmail.com</string>
+    <string name="information_message">Трех кратное быстрое нажатие на кнопку блокировки, активирует рассылку SOS сообщений.\n\n Если вы хотите поддержать нас, пожалуйста, свяжитесь с brighterDeeds@gmail.com</string>
     <string name="back">Назад</string>
     <string name="ok">Ok</string>
     <string name="description">Вы еще не добавили экстренных контактов нажмите на кнопку + и добавьте</string>
     <string name="select_contact">Вы еще не выбрали контакта</string>
-    <string name="background_work">Работает в фоновом режиме</string>
     <string name="sms_text">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Отключить СМС рассылку</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="sms_stop_dialog">Вы действительно хотите остановить СМС-рассылку?</string>
     <string name="warning">Включите GPS или мобильный интернет, без этого приложение не будет работать!</string>
+    <string name="add_contacts">Добавить в SOS лист</string>
 </resources>

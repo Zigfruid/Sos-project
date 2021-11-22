@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SOS</string>
     <string name="contacts">Kontaktlar</string>
     <string name="permission_is_required">Bu oynada toliq ishlash uchun sizga maxsus ruxsat zurur. Bu qo\'shimchani sozlamada maxsus ruxsat bering.</string>
     <string name="permission_required_title">Ruxsat</string>
@@ -14,7 +13,6 @@
     <string name="ok">Ok</string>
     <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshish uchun + tugmasiga bosing</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
-    <string name="background_work">Fonda ishlayapti</string>
     <string name="sms_text">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Sos sms yuborishni toxtatish</string>
     <string name="yes">Ha</string>

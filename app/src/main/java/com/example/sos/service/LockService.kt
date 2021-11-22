@@ -235,7 +235,7 @@ class LockService: Service(), LocationListener{
     @RequiresApi(Build.VERSION_CODES.O)
     fun notificationChannel() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
-            val name = "SOS"
+            val name = "agi"
             val descriptor = getString(R.string.background_work)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
@@ -245,7 +245,8 @@ class LockService: Service(), LocationListener{
             mNotifyManager.createNotificationChannel(channel)
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            mBuilder.setContentTitle(getString(R.string.app_name))
+//            mBuilder.setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.background_work))
                 .setSmallIcon(R.drawable.icon_512)
                 .setOngoing(true)
             notification = mBuilder.build()

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SOS" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="fontFamily">@font/mont_light</item>
+        <item name="fontFamily">@font/mont_heavy</item>
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_500</item>
         <item name="colorOnPrimary">@color/purple_700</item>
