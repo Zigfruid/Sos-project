@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/drawable/shape_square.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.15092592592592594" />
       </map>
     </option>
   </component>

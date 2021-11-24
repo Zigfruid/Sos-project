@@ -156,7 +156,6 @@ class LockService: Service(), LocationListener{
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startService() {
         if (isServiceStarted) return
-        //Toast.makeText(this, "service is started", Toast.LENGTH_SHORT).show()
         isServiceStarted = true
         setServiceState(this, ServiceState.STARTED)
         wakeLock =
@@ -226,16 +225,10 @@ class LockService: Service(), LocationListener{
                                         SMSHelper.numbers.add(contact.number)
                                     }
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                        v.vibrate(
-                                            VibrationEffect.createOneShot(
-                                                500,
-                                                VibrationEffect.DEFAULT_AMPLITUDE
-                                            )
-                                        )
-                                    } else {
-                                        v.vibrate(500)
-                                    }
+                                    v.vibrate(VibrationEffect.createOneShot(
+                                        500,
+                                        VibrationEffect.DEFAULT_AMPLITUDE
+                                    ))
                                     SMSHelper.send()
                                     mReceiver.isReadyToSend = false
                                 }
