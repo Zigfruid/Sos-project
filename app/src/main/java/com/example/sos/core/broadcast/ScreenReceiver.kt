@@ -28,7 +28,7 @@ class ScreenReceiver : BroadcastReceiver() {
             timer.start()
             Log.e("Lob","timer started")
         }
-        if (wasScreenOn ==3){
+        if (wasScreenOn ==4){
             timer.cancel()
             wasScreenOn =0
             SMSHelper.stopSendSms=false
@@ -37,7 +37,7 @@ class ScreenReceiver : BroadcastReceiver() {
         }
     }
 
-    private val timer = object : CountDownTimer(1700 , 1000){
+    private val timer = object : CountDownTimer(3500 , 1000){
         override fun onTick(p0: Long) {
         }
         override fun onFinish() {

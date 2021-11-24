@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.BuildConfig
 import com.example.sos.R
-import com.example.sos.core.broadcast.ScreenReceiver
 import com.example.sos.core.extentions.*
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
@@ -30,11 +29,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.os.VibrationEffect
 
-import androidx.core.content.ContextCompat.getSystemService
-
-import android.os.Vibrator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.sos.service.Actions
@@ -316,7 +311,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         ) {
             val dialog = AlertDialog.Builder(requireContext())
             dialog.setTitle(getString(R.string.permission))
-            dialog.setMessage(getString(R.string.infromation_descrption))
+            dialog.setMessage(getString(R.string.information_description))
             dialog.setCancelable(false)
             dialog.setPositiveButton(getString(R.string.ok)){d, _->
                 requestMultiplePermissions.launch(

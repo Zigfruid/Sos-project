@@ -14,33 +14,33 @@ class SmsSentReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (resultCode) {
             Activity.RESULT_OK -> {
-                timer.start()
+//                timer.start()
             }
             SmsManager.RESULT_ERROR_GENERIC_FAILURE -> {
-                timer.start()
+//                timer.start()
             }
             SmsManager.RESULT_ERROR_NO_SERVICE -> {
-                timer.start()
+//                timer.start()
             }
             SmsManager.RESULT_ERROR_NULL_PDU -> {
-                timer.start()
+//                timer.start()
             }
             else -> {
             }
         }
     }
 
-    private val timer = object : CountDownTimer(180000, 1000) {
-        override fun onTick(p0: Long) {
-            Log.e("LOB", "Time : ${p0/1000}")
-        }
-
-        override fun onFinish() {
-            Log.e("LOB", "Time : ${SMSHelper.stopSendSms}")
-            if(!SMSHelper.stopSendSms){
-                SMSHelper.send()
-                
-            }
-        }
-    }
+//    private val timer = object : CountDownTimer(1000, 1000) {
+//        override fun onTick(p0: Long) {
+//            Log.e("LOB", "Time : ${p0/1000}")
+//        }
+//
+//        override fun onFinish() {
+//            Log.e("LOB", "Time : ${SMSHelper.stopSendSms}")
+//            if(!SMSHelper.stopSendSms){
+//                SMSHelper.send()
+//
+//            }
+//        }
+//    }
 }

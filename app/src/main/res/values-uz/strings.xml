@@ -13,13 +13,16 @@
     <string name="ok">Ok</string>
     <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshish uchun + tugmasiga bosing</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
-    <string name="sms_text">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_english">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Sos sms yuborishni toxtatish</string>
     <string name="yes">Ha</string>
     <string name="no">Yoq</string>
     <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni toxtatmoqchimisiz?</string>
     <string name="warning">GPS yoki mobil internetni yoqing, bu holda dastur ishlamaydi!</string>
     <string name="add_contacts">Qutqaruvchilar ro\'yhatini tu\'zish</string>
-    <string name="infromation_descrption">Ilovadan foydalanishdan oldin locatsiya va kontaktlarni o\'qish uchun ruxsat berishingiz kerak, chunki ilova ushbu ruxsatlarsiz ishlamaydi.</string>
+    <string name="information_description">Ilovadan foydalanishdan oldin locatsiya va kontaktlarni o\'qish uchun ruxsat berishingiz kerak, chunki ilova ushbu ruxsatlarsiz ishlamaydi.</string>
     <string name="permission">Ruxsat</string>
+    <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
 </resources>

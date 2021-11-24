@@ -38,6 +38,7 @@ import android.os.Build
 import android.os.Vibrator
 import android.util.Log
 import com.example.sos.core.broadcast.StartReceiver
+import com.example.sos.core.model.Settings
 
 
 class LockService: Service(), LocationListener{
@@ -57,7 +58,7 @@ class LockService: Service(), LocationListener{
     private lateinit var mBuilder: NotificationCompat.Builder
     private lateinit var notification: Notification
     private var isServiceStarted = false
-
+    private val settings:Settings by inject()
     private var isGPSEnabled = false
     var isNetworkEnabled = false
     var isGPSTrackingEnabled = false
@@ -200,11 +201,28 @@ class LockService: Service(), LocationListener{
                                 ) {
                                     return@subscribe
                                 }
-                                SMSHelper.text = getString(
-                                    R.string.sms_text,
-                                    latitude.toString(),
-                                    longitude.toString()
-                                )
+                                SMSHelper.text = when(settings.getLanguage()){
+                                    "uz" -> getString(
+                                        R.string.sms_text_uz,
+                                        latitude.toString(),
+                                        longitude.toString()
+                                    )
+                                    "ru" -> getString(
+                                        R.string.sms_text_rus,
+                                        latitude.toString(),
+                                        longitude.toString()
+                                    )
+                                    "kaa" -> getString(
+                                        R.string.sms_text_kaa,
+                                        latitude.toString(),
+                                        longitude.toString()
+                                    )
+                                    else -> getString(
+                                        R.string.sms_text_english,
+                                        latitude.toString(),
+                                        longitude.toString()
+                                    )
+                                }
                                 if (mReceiver.isReadyToSend) {
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

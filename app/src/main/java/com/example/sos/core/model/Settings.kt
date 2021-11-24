@@ -10,7 +10,6 @@ class Settings(context:Context) {
         const val LANGUAGE = "currentLanguage"
         const val POSITION = "position"
         const val FIRST_LAUNCH = "firstLaunch"
-        const val CHECK = "check"
     }
     private val preferences: SharedPreferences = context.getSharedPreferences("LanguageSharedPreferences", Context.MODE_PRIVATE)
 
@@ -35,9 +34,4 @@ class Settings(context:Context) {
         preferences.edit().putBoolean(FIRST_LAUNCH, true).apply()
     }
     fun checkLaunchStatic() : Boolean = preferences.getBoolean(FIRST_LAUNCH,false)
-
-    fun setCheck(){
-        preferences.edit().putBoolean(CHECK, true).apply()
-    }
-    fun getCheck() : Boolean = preferences.getBoolean(CHECK,false)
 }

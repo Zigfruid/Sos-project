@@ -13,7 +13,6 @@
     <string name="ok">Ok</string>
     <string name="description">You have not added emergency contacts yet, click + button and add them</string>
     <string name="select_contact">You haven\'t been choose contact</string>
-    <string name="sms_text">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Disable SMS mailing</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -21,5 +20,9 @@
     <string name="warning">Turn on GPS or mobile internet, without this the application will not work!</string>
     <string name="add_contacts">Add to SOS list</string>
     <string name="permission">Permission</string>
-    <string name="infromation_descrption">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
+    <string name="information_description">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
+    <string name="sms_text_english">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
 </resources>
