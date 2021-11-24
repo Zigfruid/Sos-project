@@ -28,7 +28,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +36,6 @@
             android:name=".service.LockService"
             android:enabled="true"
             android:stopWithTask="false">
-
         </service>
 
         <receiver

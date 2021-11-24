@@ -53,6 +53,7 @@
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="40dp"
+            android:buttonTint="@color/btn_contacts_backgroun_colour"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivImgProfile"
             app:layout_constraintBottom_toBottomOf="@id/ivImgProfile"

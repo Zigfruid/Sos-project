@@ -13,6 +13,8 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="main_200">#324162</color>
+    <color name="intro_back_colour">#01133B</color>
+    <color name="btn_contacts_backgroun_colour">#3B2901</color>
 
     <!--    <color name="primaryColor">#bbc7dd</color>-->
     <!--    <color name="primaryLightColor">#eefaff</color>-->

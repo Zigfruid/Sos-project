@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -19,4 +19,34 @@
         tools:layout="@layout/fragment_contacts"
         android:name="com.example.sos.ui.contacts.ContactsFragment"
         android:label="FragmentContacts" />
+    <fragment
+        android:id="@+id/splashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:name="com.example.sos.ui.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/nav_graph"
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
+        <action
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/nav_graph"
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        tools:layout="@layout/fragment_viewpager"
+        android:name="com.example.sos.ui.viewpager.ViewPagerFragment"
+        android:label="ViewPagerFragment" >
+        <action
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/nav_graph"
+            android:id="@+id/action_viewPagerFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

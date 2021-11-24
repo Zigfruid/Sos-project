@@ -62,6 +62,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         binding.rv1.addItemDecoration(MarginItemDecoration(8.dp))
         binding.rv1.layoutManager = layoutManager
         viewModel.getAllSelectedContacts()
+        settings.setFirstLaunched()
         setObservers()
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())

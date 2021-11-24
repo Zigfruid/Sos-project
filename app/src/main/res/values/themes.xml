@@ -13,6 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="alertDialogTheme">@style/DefaultAlertDialogTheme</item>
     </style>
 
     <style name="Theme.SOS.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
@@ -21,4 +22,13 @@
         <item name="appWidgetInnerRadius">4dp</item>
     </style>
     <style name="Theme.SOS.AppWidgetContainer" parent="Theme.SOS.AppWidgetContainerParent" />
+    <style name="DefaultAlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <!--        Title Color-->
+        <item name="android:textColorPrimary">@color/black</item>
+        <!--        Radio button unchecked-->
+        <item name="android:colorControlNormal">@color/btn_contacts_backgroun_colour</item>
+        <!--        Radio button checked-->
+        <item name="android:colorControlActivated">@color/btn_contacts_backgroun_colour</item>
+    </style>
+
 </resources>
