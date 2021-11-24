@@ -88,6 +88,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             viewModel.deleteSelectedContact(contact)
             adapter.deleteContact(position)
             SMSHelper.numbers.remove(contact.number)
+            Toast.makeText(requireContext(), SMSHelper.numbers.toString(), Toast.LENGTH_LONG).show()
             setObservers()
         }
         binding.btnSettings.onClick {

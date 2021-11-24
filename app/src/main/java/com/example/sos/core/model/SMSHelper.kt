@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.telephony.SmsManager
+import android.widget.Toast
 import com.example.sos.core.broadcast.SmsSentReceiver
 
 @SuppressLint("StaticFieldLeak")
@@ -27,6 +28,7 @@ object SMSHelper {
             val mSMSMessage: ArrayList<String> = sms.divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
+            Toast.makeText(context, numbers.toString(), Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             e.printStackTrace()
         }

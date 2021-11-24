@@ -184,9 +184,6 @@ class LockService: Service(), LocationListener{
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            it.forEach { contact ->
-                                SMSHelper.numbers.add(contact.number)
-                            }
                             context = this
                             if (latitude!=0.0 && longitude!=0.0) {
                                 locationManager =
@@ -224,6 +221,10 @@ class LockService: Service(), LocationListener{
                                     )
                                 }
                                 if (mReceiver.isReadyToSend) {
+                                    SMSHelper.numbers.clear()
+                                    it.forEach { contact ->
+                                        SMSHelper.numbers.add(contact.number)
+                                    }
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                         v.vibrate(
@@ -263,7 +264,6 @@ class LockService: Service(), LocationListener{
             mNotifyManager.createNotificationChannel(channel)
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-//            mBuilder.setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.background_work))
                 .setSmallIcon(R.drawable.icon_512)
                 .setOngoing(true)
