@@ -59,30 +59,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    override fun onStart() {
-        super.onStart()
-        if (!settings.getCheck()){
-            val dialog = AlertDialog.Builder(requireContext())
-            dialog.setTitle(getString(R.string.permission))
-            dialog.setMessage(getString(R.string.infromation_descrption))
-            dialog.setCancelable(false)
-            dialog.setPositiveButton(getString(R.string.ok)){d, _->
-                checkForPermissions()
-                if (isGranted) {
-                    checkGpsStatus()
-                    actionOnService(Actions.START)
-                    settings.setCheck()
-                } else {
-                    showDialog()
-                }
-                d.dismiss()
-            }
-            dialog.show()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -103,10 +79,16 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         viewModel.getAllSelectedContacts()
         settings.setFirstLaunched()
         setObservers()
+        if (isGranted){
+            checkGpsStatus()
+            checkForPermissions()
+            actionOnService(Actions.START)
+        }else{
+            showDialog()
+        }
         binding.fabMain.onClick {
           navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentContacts())
         }
-
         adapter.setOnClickItemDelete { contact, position->
             viewModel.deleteSelectedContact(contact)
             adapter.deleteContact(position)
@@ -308,6 +290,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             }
         }.create().show()
     }
+
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkForPermissions() {
         if (ContextCompat.checkSelfPermission(
@@ -331,16 +314,23 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 Manifest.permission.ACCESS_NETWORK_STATE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            requestMultiplePermissions.launch(
-                arrayOf(
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.SEND_SMS,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
+            val dialog = AlertDialog.Builder(requireContext())
+            dialog.setTitle(getString(R.string.permission))
+            dialog.setMessage(getString(R.string.infromation_descrption))
+            dialog.setCancelable(false)
+            dialog.setPositiveButton(getString(R.string.ok)){d, _->
+                requestMultiplePermissions.launch(
+                    arrayOf(
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                    )
                 )
-            )
+                d.dismiss()
+            }
+            dialog.show()
         }
     }
-
 }
