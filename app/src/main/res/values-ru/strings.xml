@@ -20,4 +20,6 @@
     <string name="sms_stop_dialog">Вы действительно хотите остановить СМС-рассылку?</string>
     <string name="warning">Включите GPS или мобильный интернет, без этого приложение не будет работать!</string>
     <string name="add_contacts">Добавить в SOS лист</string>
+    <string name="infromation_descrption">Перед использовнием приложение вам нужно дать разрешение на локацию и для чтение контактов так как без этих разрешений приложение не будет работать</string>
+    <string name="permission">Разрешение</string>
 </resources>

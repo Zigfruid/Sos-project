@@ -20,4 +20,6 @@
     <string name="sms_stop_dialog">Siz, álbette, SMS-xabardı toqtatıwchimisiz?</string>
     <string name="warning">GPS yaki mobil internetni jagin, bolmasa dastur islemeydi!</string>
     <string name="add_contacts">Qutqariwshilar dizimin du\'ziw</string>
+    <string name="infromation_descrption">Qosımshadan paydalanıwdan aldın locatsiya hám kontaktlarni oqıw ushın ruxsat beriwińiz kerek, sebebi qosımsha bul ruxsatlarsız islemeydi.</string>
+    <string name="permission">Ruxsat</string>
 </resources>

@@ -1,6 +1,10 @@
 package com.example.sos.ui.main
 
+import android.Manifest
 import android.content.*
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -31,7 +35,11 @@ import android.os.VibrationEffect
 import androidx.core.content.ContextCompat.getSystemService
 
 import android.os.Vibrator
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.example.sos.service.Actions
+import com.example.sos.service.LockService
+import com.google.android.gms.common.api.ApiException
 
 
 class MainFragment: Fragment(R.layout.fragment_main) {
@@ -43,6 +51,37 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private var selectedLanguage = ""
     private val settings: Settings by inject()
     var isSelected = false
+    var isGranted = true
+
+    private val locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 10000
+        fastestInterval = 5000 / 2
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onStart() {
+        super.onStart()
+        if (!settings.getCheck()){
+            val dialog = AlertDialog.Builder(requireContext())
+            dialog.setTitle(getString(R.string.permission))
+            dialog.setMessage(getString(R.string.infromation_descrption))
+            dialog.setCancelable(false)
+            dialog.setPositiveButton(getString(R.string.ok)){d, _->
+                checkForPermissions()
+                if (isGranted) {
+                    checkGpsStatus()
+                    actionOnService(Actions.START)
+                    settings.setCheck()
+                } else {
+                    showDialog()
+                }
+                d.dismiss()
+            }
+            dialog.show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -198,6 +237,110 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(refresh)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun checkGpsStatus() {
+        val settingsClient: SettingsClient = LocationServices.getSettingsClient(requireActivity())
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+        val locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationSettingsRequest: LocationSettingsRequest = builder.build()
+        builder.setAlwaysShow(true)
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            settingsClient
+                .checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener(requireActivity()) {
+                }
+                .addOnFailureListener(requireActivity()) { e ->
+                    when ((e as ApiException).statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
+                            try {
+                                val rae = e as ResolvableApiException
+                                rae.startResolutionForResult(requireActivity(), 101)
+                            } catch (sie: IntentSender.SendIntentException) {
+                            }
+
+                    }
+                }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun actionOnService(actions: Actions) {
+        Intent(requireContext(), LockService::class.java).also { int ->
+            int.action = actions.name
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(requireContext(), int)
+                return
+            }
+            requireActivity().startService(int)
+        }
+    }
+
+
+    private val requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.forEach {
+                if (!it.value) isGranted = false
+            }
+            if (isGranted) {
+                requireContext().startService(Intent(requireContext(), LockService::class.java))
+            }else{
+                showDialog()
+            }
+        }
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setMessage(getString(R.string.permission_is_required))
+            setTitle(getString(R.string.permission_required_title))
+            setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            setPositiveButton(getString(R.string.go_to_settings)) { _, _ ->
+                val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+        }.create().show()
+    }
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun checkForPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.SEND_SMS
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_NETWORK_STATE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestMultiplePermissions.launch(
+                arrayOf(
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                )
+            )
+        }
     }
 
 }

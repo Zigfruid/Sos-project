@@ -20,4 +20,6 @@
     <string name="sms_stop_dialog">Do you really want to stop sending SMS messages?</string>
     <string name="warning">Turn on GPS or mobile internet, without this the application will not work!</string>
     <string name="add_contacts">Add to SOS list</string>
+    <string name="permission">Permission</string>
+    <string name="infromation_descrption">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
 </resources>

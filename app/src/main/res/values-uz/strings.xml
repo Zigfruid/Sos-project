@@ -20,4 +20,6 @@
     <string name="sms_stop_dialog">Siz, albatta, SMS-xabarni toxtatmoqchimisiz?</string>
     <string name="warning">GPS yoki mobil internetni yoqing, bu holda dastur ishlamaydi!</string>
     <string name="add_contacts">Qutqaruvchilar ro\'yhatini tu\'zish</string>
+    <string name="infromation_descrption">Ilovadan foydalanishdan oldin locatsiya va kontaktlarni o\'qish uchun ruxsat berishingiz kerak, chunki ilova ushbu ruxsatlarsiz ishlamaydi.</string>
+    <string name="permission">Ruxsat</string>
 </resources>
