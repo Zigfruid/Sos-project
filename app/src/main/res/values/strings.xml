@@ -33,4 +33,5 @@
     <string name="add_contacts">Add to SOS list</string>
     <string name="permission">Permission</string>
     <string name="information_description">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
+    <string name="contacts_was_added">Contacts was added</string>
 </resources>

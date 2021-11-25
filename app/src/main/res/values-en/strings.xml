@@ -25,4 +25,5 @@
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="contacts_was_added">Contacts was added</string>
 </resources>

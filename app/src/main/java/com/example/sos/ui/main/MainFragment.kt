@@ -98,76 +98,42 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             },1000)
         }
         binding.btnSettings.onClick {
-            val dialog = AlertDialog.Builder(requireContext())
-            val points = arrayOf(getString(R.string.change_language),getString(R.string.information),getString(
-                            R.string.stop_sent_sms))
-            dialog.setTitle(getString(R.string.settings))
-            dialog.setItems(points){_,which->
-                when(which){
-                    0->{
-                        val dialogLanguages = AlertDialog.Builder(requireContext())
-                        dialogLanguages.setTitle(getString(R.string.change_language))
-                        val languages = arrayOf(getString(R.string.russian_language),
-                            getString(R.string.karakalpak_language),
-                            getString(R.string.uzbek_language),
-                            getString(R.string.english_language))
-                        dialogLanguages.setSingleChoiceItems(languages,settings.getPosition()) { _, i ->
-                            selectedLanguage = languages[i]
-                            settings.setPosition(i)
+            val dialogLanguages = AlertDialog.Builder(requireContext())
+            dialogLanguages.setTitle(getString(R.string.change_language))
+            val languages = arrayOf(getString(R.string.russian_language),
+                getString(R.string.karakalpak_language),
+                getString(R.string.uzbek_language),
+                getString(R.string.english_language))
+            dialogLanguages.setSingleChoiceItems(languages,settings.getPosition()) { _, i ->
+                selectedLanguage = languages[i]
+                settings.setPosition(i)
 
-                        }
-                        dialogLanguages.setPositiveButton("Ok"){ _, _->
-                            when(selectedLanguage){
-                                getString(R.string.russian_language) ->{
-                                    settings.setLanguage("ru")
-                                    setLocale()
-                                    settings.setFirstLanguageSelected()
-                                }
-                                getString(R.string.karakalpak_language) ->{
-                                    settings.setLanguage("kaa")
-                                    setLocale()
-                                    settings.setFirstLanguageSelected()
-                                }
-                                getString(R.string.uzbek_language) ->{
-                                    settings.setLanguage("uz")
-                                    setLocale()
-                                    settings.setFirstLanguageSelected()
-                                }
-                                getString(R.string.english_language) ->{
-                                    settings.setLanguage("en")
-                                    setLocale()
-                                    settings.setFirstLanguageSelected()
-                                }
-                            }
-                        }
-                        dialogLanguages.show()
+            }
+            dialogLanguages.setPositiveButton("Ok"){ _, _->
+                when(selectedLanguage){
+                    getString(R.string.russian_language) ->{
+                        settings.setLanguage("ru")
+                        setLocale()
+                        settings.setFirstLanguageSelected()
                     }
-
-                    1->{
-                        val dialogInfo = AlertDialog.Builder(requireContext())
-                        dialogInfo.setTitle(getString(R.string.information))
-                        dialogInfo.setMessage(getString(R.string.information_message))
-                        dialogInfo.setPositiveButton("OK"){d, _->
-                            d.dismiss()
-                        }
-                        dialogInfo.show()
+                    getString(R.string.karakalpak_language) ->{
+                        settings.setLanguage("kaa")
+                        setLocale()
+                        settings.setFirstLanguageSelected()
                     }
-                    2->{
-                        val dialogStopSentSms = AlertDialog.Builder(requireContext())
-                        dialogStopSentSms.setMessage(getString(R.string.sms_stop_dialog))
-                        dialogStopSentSms.setPositiveButton(getString(R.string.yes)){ d, _->
-                            SMSHelper.stopSendSms=true
-                            d.dismiss()
-                        }
-                        dialogStopSentSms.setNegativeButton(getString(R.string.no)){ d, _->
-                            d.dismiss()
-                        }
-                        dialogStopSentSms.show()
+                    getString(R.string.uzbek_language) ->{
+                        settings.setLanguage("uz")
+                        setLocale()
+                        settings.setFirstLanguageSelected()
                     }
-
+                    getString(R.string.english_language) ->{
+                        settings.setLanguage("en")
+                        setLocale()
+                        settings.setFirstLanguageSelected()
+                    }
                 }
             }
-            dialog.show()
+            dialogLanguages.show()
         }
 
         binding.btnShare.onClick {

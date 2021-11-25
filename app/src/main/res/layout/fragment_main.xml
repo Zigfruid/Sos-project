@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@id/gd1"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_height="40dp"
-        android:src="@drawable/ic_cogwheel"
+        android:src="@drawable/ic_baseline_language_24"
         android:padding="5dp"/>
 
     <View
