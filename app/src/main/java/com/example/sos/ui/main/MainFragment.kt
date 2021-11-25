@@ -7,6 +7,8 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,6 +91,11 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             adapter.deleteContact(position)
             SMSHelper.numbers.remove(contact.number)
             setObservers()
+            val intent = Intent(requireActivity(), LockService::class.java)
+            requireActivity().stopService(intent)
+            Handler(Looper.getMainLooper()).postDelayed({
+              actionOnService(Actions.START)
+            },1000)
         }
         binding.btnSettings.onClick {
             val dialog = AlertDialog.Builder(requireContext())

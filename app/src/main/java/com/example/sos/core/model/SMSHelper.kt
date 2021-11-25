@@ -22,12 +22,14 @@ object SMSHelper {
         val deliveredPendingIntents = ArrayList<PendingIntent>()
         val sentPI = PendingIntent.getBroadcast(context, 0,
             Intent(context, SmsSentReceiver::class.java), 0)
+        if (cnt < numbers.size)
         try {
             val sms = SmsManager.getDefault()
             sentPendingIntents.add(sentPI)
             val mSMSMessage: ArrayList<String> = sms.divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
+            Toast.makeText(context, numbers.toString(), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -82,7 +82,7 @@ class LockService: Service(), LocationListener{
         super.onDestroy()
         setServiceState(this, ServiceState.STOPPED)
         val broadcastIntent = Intent()
-        broadcastIntent.action = "android.intent.action.BOOT_COMPLETED"
+        //broadcastIntent.action = "android.intent.action.BOOT_COMPLETED"
         broadcastIntent.setClass(this, StartReceiver::class.java)
         this.sendBroadcast(broadcastIntent)
     }
@@ -220,10 +220,13 @@ class LockService: Service(), LocationListener{
                                     )
                                 }
                                 if (mReceiver.isReadyToSend) {
+                                    Log.d("abc", SMSHelper.numbers.toString())
                                     SMSHelper.numbers.clear()
+                                    Log.d("abc", SMSHelper.numbers.toString())
                                     it.forEach { contact ->
                                         SMSHelper.numbers.add(contact.number)
                                     }
+                                    Log.d("abc", SMSHelper.numbers.toString())
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
                                     v.vibrate(VibrationEffect.createOneShot(
                                         500,
