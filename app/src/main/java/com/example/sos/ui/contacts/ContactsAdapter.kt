@@ -37,6 +37,11 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.checkbox.isChecked = contact.isSelected
             binding.checkbox.onClick {
                 contact.isSelected=!contact.isSelected
+                if (contact.isSelected){
+                    onClickItem.invoke(contact, true)
+                }else{
+                    onClickItem.invoke(contact, false)
+                }
             }
             binding.checkbox.setOnCheckedChangeListener { _, b, ->
                 if (b) {
@@ -45,6 +50,7 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
                     onClickItem.invoke(contact, false)
                 }
             }
+
         }
     }
 
