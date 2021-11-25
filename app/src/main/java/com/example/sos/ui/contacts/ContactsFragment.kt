@@ -75,7 +75,7 @@ class ContactsFragment : ContactHelper(R.layout.fragment_contacts) {
         })
         contactList.sortBy { it.name }
         adapter.allModel = contactList
-        adapter.setOnClickItem {contact, isSelected->
+        adapter.setOnClickItem { contact, isSelected ->
             if (isSelected) {
                 selectedContactList.add(contact)
             } else {

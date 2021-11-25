@@ -1,12 +1,11 @@
 package com.example.sos.ui.contacts
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
 import com.example.sos.core.extentions.inflate
-import com.example.sos.core.remote.Contact
 import com.example.sos.core.extentions.onClick
+import com.example.sos.core.remote.Contact
 import com.example.sos.databinding.ItemSelectContactBinding
 
 class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>() {
@@ -34,13 +33,12 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
             binding.apply {
                 tvName.text = contact.name
                 tvNumber.text = contact.number
-                checkbox.isChecked = contact.isSelected
             }
-            binding.root.onClick {
+            binding.checkbox.isChecked = contact.isSelected
+            binding.checkbox.onClick {
                 contact.isSelected=!contact.isSelected
-                binding.checkbox.isChecked = contact.isSelected
             }
-            binding.checkbox.setOnCheckedChangeListener { _, b ->
+            binding.checkbox.setOnCheckedChangeListener { _, b, ->
                 if (b) {
                     onClickItem.invoke(contact, true)
                 } else {

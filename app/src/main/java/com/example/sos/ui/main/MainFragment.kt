@@ -212,11 +212,14 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setLocale() {
+        val intent = Intent(requireActivity(), LockService::class.java)
+        requireActivity().stopService(intent)
+            actionOnService(Actions.START)
         val refresh = Intent(
             requireContext(),
-            MainActivity::class.java
-        )
+            MainActivity::class.java)
         refresh.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         requireActivity().intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

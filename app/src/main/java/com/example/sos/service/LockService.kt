@@ -220,13 +220,10 @@ class LockService: Service(), LocationListener{
                                     )
                                 }
                                 if (mReceiver.isReadyToSend) {
-                                    Log.d("abc", SMSHelper.numbers.toString())
                                     SMSHelper.numbers.clear()
-                                    Log.d("abc", SMSHelper.numbers.toString())
                                     it.forEach { contact ->
                                         SMSHelper.numbers.add(contact.number)
                                     }
-                                    Log.d("abc", SMSHelper.numbers.toString())
                                     val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
                                     v.vibrate(VibrationEffect.createOneShot(
                                         500,

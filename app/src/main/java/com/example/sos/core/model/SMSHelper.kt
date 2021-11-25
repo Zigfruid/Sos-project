@@ -29,10 +29,10 @@ object SMSHelper {
             val mSMSMessage: ArrayList<String> = sms.divideMessage(text)
             sms.sendMultipartTextMessage(numbers[cnt++], null, mSMSMessage,
                 sentPendingIntents, deliveredPendingIntents)
-            Toast.makeText(context, numbers.toString(), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        else cnt = 0
     }
 
 
