@@ -15,6 +15,7 @@
     <color name="main_200">#324162</color>
     <color name="intro_back_colour">#01133B</color>
     <color name="btn_contacts_backgroun_colour">#3B2901</color>
+    <color name="dot_background">#303B01</color>
 
     <!--    <color name="primaryColor">#bbc7dd</color>-->
     <!--    <color name="primaryLightColor">#eefaff</color>-->

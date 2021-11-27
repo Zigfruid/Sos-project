@@ -17,9 +17,6 @@ class FragmentInstructionThird: Fragment(R.layout.fragment_instructions_third) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnStart.onClick {
-            findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToMainFragment())
-        }
     }
 
     override fun onCreateView(

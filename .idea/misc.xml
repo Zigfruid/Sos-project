@@ -7,14 +7,16 @@
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/drawable-v21/app_widget_inner_view_background.xml" value="0.1125" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/drawable/cursor.xml" value="0.2203125" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/drawable/ic_launcher_background.xml" value="0.13697916666666668" />
+        <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/drawable/ic_search.xml" value="0.2203125" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/activity_main.xml" value="0.20102564102564102" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/dialog_success.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_contacts.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_instructions_first.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_instructions_second.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_instructions_third.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_last.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_main.xml" value="0.2" />
-        <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_splash.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_splash.xml" value="0.12" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/fragment_viewpager.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/item_contact.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/item_select_contact.xml" value="0.20416666666666666" />
@@ -33,5 +35,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.12" />
+      </ProjectState>
+    </option>
   </component>
 </project>

@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import com.example.sos.service.Actions
 import com.example.sos.service.LockService
 import com.google.android.gms.common.api.ApiException
@@ -109,7 +111,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 settings.setPosition(i)
 
             }
-            dialogLanguages.setPositiveButton("Ok"){ _, _->
+            dialogLanguages.setPositiveButton(HtmlCompat.fromHtml("<font color='#303B01'>Ok</font>",HtmlCompat.FROM_HTML_MODE_LEGACY)){ _, _->
                 when(selectedLanguage){
                     getString(R.string.russian_language) ->{
                         settings.setLanguage("ru")

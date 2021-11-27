@@ -15,7 +15,7 @@
     <string name="information_message">3 tap instant click on block button, activates SOS mailing.\n\nIf you consider support us, please contact brighterDeeds@gmail.com</string>
     <string name="back">back</string>
     <string name="ok">Ok</string>
-    <string name="description">You have not added emergency contacts yet, click + button and add them</string>
+    <string name="description">You have not added emergency contacts yet, you can add them by clicking the + icon</string>
     <string name="select_contact">You haven\'t been choose contact</string>
     <string name="appwidget_text" translatable="false">SOS widget</string>
     <string name="add_widget" translatable="false">Add widget</string>
@@ -33,5 +33,5 @@
     <string name="add_contacts">Add to SOS list</string>
     <string name="permission">Permission</string>
     <string name="information_description">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
-    <string name="contacts_was_added">Contacts was added</string>
+    <string name="contacts_was_added">Contacts were added</string>
 </resources>

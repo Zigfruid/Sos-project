@@ -11,7 +11,7 @@
     <string name="information_message">Блоклаш тугмасини тезлик билан уч марта босиш орқали SOS хабарномасини жўнатиш амалга оширилади.\n\nAgar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
     <string name="back">"Ortga "</string>
     <string name="ok">Ok</string>
-    <string name="description">Siz hali ekstrenniy  kontaktlarni qo\'shmagansiz qoshish uchun + tugmasiga bosing</string>
+    <string name="description">Siz hali favqulodda kontaktlarni qo\'shmagansiz, ularni + belgisini bosish orqali qo\'shishingiz mumkin</string>
     <string name="select_contact">Siz hali kontakt saylamadingiz</string>
     <string name="sms_text_english">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Sos sms yuborishni toxtatish</string>

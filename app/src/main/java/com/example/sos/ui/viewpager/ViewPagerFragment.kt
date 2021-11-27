@@ -15,6 +15,7 @@ import com.example.sos.databinding.FragmentViewpagerBinding
 import com.example.sos.ui.instruction.FragmentInstructionFirst
 import com.example.sos.ui.instruction.FragmentInstructionSecond
 import com.example.sos.ui.instruction.FragmentInstructionThird
+import com.example.sos.ui.instruction.FragmentLast
 
 class ViewPagerFragment: Fragment() {
     private var _binding: FragmentViewpagerBinding? = null
@@ -28,7 +29,8 @@ class ViewPagerFragment: Fragment() {
         val fragmentList = arrayListOf(
             FragmentInstructionFirst(),
             FragmentInstructionSecond(),
-            FragmentInstructionThird()
+            FragmentInstructionThird(),
+            FragmentLast()
         )
 
         val adapter = ViewPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)

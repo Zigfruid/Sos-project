@@ -11,7 +11,7 @@
     <string name="information_message">Трех кратное быстрое нажатие на кнопку блокировки, активирует рассылку SOS сообщений.\n\n Если вы хотите поддержать нас, пожалуйста, свяжитесь с brighterDeeds@gmail.com</string>
     <string name="back">Назад</string>
     <string name="ok">Ok</string>
-    <string name="description">Вы еще не добавили экстренных контактов нажмите на кнопку + и добавьте</string>
+    <string name="description">Вы еще не добавили экстренные контакты, вы можете добавить их нажав на иконку +</string>
     <string name="select_contact">Вы еще не выбрали контакта</string>
     <string name="stop_sent_sms">Отключить СМС рассылку</string>
     <string name="yes">Да</string>
