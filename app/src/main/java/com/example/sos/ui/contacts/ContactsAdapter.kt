@@ -1,5 +1,6 @@
 package com.example.sos.ui.contacts
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sos.R
@@ -47,6 +48,15 @@ class ContactsAdapter: RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder>(
                 if (b) {
                     onClickItem.invoke(contact, true)
                 } else {
+                    onClickItem.invoke(contact, false)
+                }
+            }
+            binding.root.onClick {
+                binding.checkbox.isChecked = !contact.isSelected
+                contact.isSelected=!contact.isSelected
+                if (contact.isSelected){
+                    onClickItem.invoke(contact, true)
+                }else{
                     onClickItem.invoke(contact, false)
                 }
             }
