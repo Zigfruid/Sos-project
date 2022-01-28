@@ -23,7 +23,6 @@
         android:id="@+id/btnStart"
         android:padding="@dimen/margin_small"
         android:background="@drawable/button_press"
-        android:foreground="?selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="48dp"

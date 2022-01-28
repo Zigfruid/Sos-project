@@ -1,6 +1,7 @@
 package com.example.sos
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.sos.di.adapterModule
 import com.example.sos.di.localModule
 import com.example.sos.di.viewModelModule
@@ -13,6 +14,7 @@ import java.util.*
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val modules = listOf(adapterModule, localModule, viewModelModule)
         startKoin { // use AndroidLogger as Koin Logger - default Level.INFO
             androidLogger()
