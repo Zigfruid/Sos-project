@@ -25,5 +25,10 @@
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
-    <string name="contacts_was_added">Contacts were added</string>
+    <string name="contacts_was_added">Contacts was added</string>
+    <string name="text_first_instruction">Create an \nemergency\n contact’s list</string>
+    <string name="text_second_instruction">If an emergency \noccurs press the \n power button 4 \ntimes in less than\n 3.5 seconds.</string>
+    <string name="text_third_instruction">app will send your \ncurrent GPS \nlocation and help \nmessage to your \ncreated contact \nlist.</string>
+    <string name="start">START</string>
+>>>>>>> Stashed changes
 </resources>

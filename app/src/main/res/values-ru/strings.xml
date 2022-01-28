@@ -26,4 +26,9 @@
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="contacts_was_added">Контакты добавлены</string>
+
+    <string name="text_first_instruction">Создайте список \nэкстренных контактов</string>
+    <string name="text_second_instruction">В случае возникновения \nчрезвычайной ситуации \nнажмите кнопку питания \n4 раза менее чем за 3,5 секунды.</string>
+    <string name="text_third_instruction">Приложение отправит \nваше текущее местоположение GPS и справочное сообщение \nв созданный вами  \n список контактов.</string>
+    <string name="start">НАЧАТЬ</string>
 </resources>

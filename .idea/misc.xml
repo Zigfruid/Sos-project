@@ -23,9 +23,17 @@
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/layout/s_o_s_widget.xml" value="0.20102564102564102" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.13697916666666668" />
         <entry key="..\:/AndroidStudioProjects/SOS/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2203125" />
+        <entry key="app/src/main/res/drawable/background_button.xml" value="0.2158974358974359" />
+        <entry key="app/src/main/res/drawable/background_button_press.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/drawable/button_press.xml" value="0.2158974358974359" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.2158974358974359" />
+        <entry key="app/src/main/res/drawable/ic_arrow_forward.xml" value="0.2158974358974359" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/drawable/shape_square.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/layout/fragment_contacts.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_instructions_first.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_instructions_second.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_instructions_third.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.15092592592592594" />
       </map>
     </option>

@@ -6,7 +6,30 @@
     android:background="@color/intro_back_colour"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="@dimen/margin_small"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
+        android:layout_marginStart="@dimen/margin_standard"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btnForward"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="@dimen/margin_small"
+        android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
+        android:layout_marginEnd="@dimen/margin_standard"/>
+
     <ImageView
+        android:id="@+id/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/margin_large"
@@ -15,17 +38,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_second_screen_background"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,9 +48,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="If an emergency \noccurs press the \n power button 4 \ntimes in less than\n 3.5 seconds."
-        app:layout_constraintTop_toTopOf="@id/logo"
-        app:layout_constraintBottom_toBottomOf="@id/logo"
+        android:text="@string/text_second_instruction"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 

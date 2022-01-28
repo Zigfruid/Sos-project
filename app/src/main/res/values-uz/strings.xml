@@ -26,4 +26,8 @@
     <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="contacts_was_added">Kontaktlar qo\'shildi</string>
+    <string name="text_first_instruction">Favqulodda kontaktlar ro\'yxatini yaratish</string>
+    <string name="text_second_instruction">Favqulodda holatda \n3.5 soniya vaqt ichida \n4 marta bloklash \ntugmasini bosing.</string>
+    <string name="text_third_instruction">Ilova sizning joriy GPS manzilingizni va yordam so\'rovchi xabarni siz yaratgan kontaktlar ro\'yxatiga yuboradi</string>
+    <string name="start">BOSHLASH</string>
 </resources>

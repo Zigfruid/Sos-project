@@ -41,6 +41,7 @@ import com.example.sos.service.LockService
 import com.google.android.gms.common.api.ApiException
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 class MainFragment: Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -180,7 +181,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setLocale() {
         val intent = Intent(requireActivity(), LockService::class.java)
         requireActivity().stopService(intent)
@@ -194,8 +194,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         startActivity(refresh)
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     fun checkGpsStatus() {
         val settingsClient: SettingsClient = LocationServices.getSettingsClient(requireActivity())
         val builder = LocationSettingsRequest.Builder()
@@ -223,7 +221,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun actionOnService(actions: Actions) {
         Intent(requireContext(), LockService::class.java).also { int ->
             int.action = actions.name
@@ -247,6 +244,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 showDialog()
             }
         }
+
     private fun showDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
@@ -264,7 +262,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }.create().show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     private fun checkForPermissions() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),

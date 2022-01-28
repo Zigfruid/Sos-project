@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sos.R
 import com.example.sos.core.extentions.onClick
 import com.example.sos.databinding.FragmentInstructionsSecondBinding
+import com.example.sos.ui.viewpager.ViewPagerFragmentDirections
 
 class FragmentInstructionSecond: Fragment(R.layout.fragment_instructions_second) {
     private var _binding:FragmentInstructionsSecondBinding? = null
@@ -25,10 +27,6 @@ class FragmentInstructionSecond: Fragment(R.layout.fragment_instructions_second)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewPager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
-//        binding.button.onClick {
-//            viewPager?.currentItem = 2
-//        }
 
     }
 }

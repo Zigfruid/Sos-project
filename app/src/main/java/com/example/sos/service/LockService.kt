@@ -82,7 +82,6 @@ class LockService: Service(), LocationListener{
         super.onDestroy()
         setServiceState(this, ServiceState.STOPPED)
         val broadcastIntent = Intent()
-        //broadcastIntent.action = "android.intent.action.BOOT_COMPLETED"
         broadcastIntent.setClass(this, StartReceiver::class.java)
         this.sendBroadcast(broadcastIntent)
     }

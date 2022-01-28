@@ -20,8 +20,8 @@ class SplashFragment: Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
         if (settings.checkLaunchStatic()){
             Handler(Looper.getMainLooper()).postDelayed({
-                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToMainFragment())
-           },3000)
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToMainFragment())
+            },3000)
         }else{
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToViewPagerFragment())

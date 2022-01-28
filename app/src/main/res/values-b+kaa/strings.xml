@@ -26,4 +26,8 @@
     <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="contacts_was_added">"Kontaktlar qosıldı "</string>
+    <string name="text_first_instruction">Ayrıqsha kontaktlar \ndizimin jaratıw </string>
+    <string name="text_second_instruction">Ayrıqsha jaǵdayda \n3. 5 sekund waqıt ishinde \n4 ret bloklaw túymesin \nbasıń.</string>
+    <string name="text_third_instruction">Programma siziń ámeldegi GPS adresıńızdı hám \njárdem sorawshı xabardı \nsiz jaratqan kontaktlar dizimine jiberedi</string>
+    <string name="start">BASLAW</string>
 </resources>

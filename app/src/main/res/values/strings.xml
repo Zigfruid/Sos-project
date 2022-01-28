@@ -34,4 +34,8 @@
     <string name="permission">Permission</string>
     <string name="information_description">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
     <string name="contacts_was_added">Contacts were added</string>
+    <string name="text_first_instruction">Create an emergency\n contact’s list</string>
+    <string name="text_second_instruction">If an emergency occurs \npress the power button \n4 times in less \nthan 3.5 seconds.</string>
+    <string name="text_third_instruction">App will send your \ncurrent GPS location \nand help message to your \ncreated contact list.</string>
+    <string name="start">START</string>
 </resources>
