@@ -11,21 +11,21 @@ import com.example.sos.R
 import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentSplashBinding
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment: Fragment(R.layout.fragment_splash) {
 
     private val settings:Settings by inject()
+    private val viewModel by viewModel<SplashViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (settings.checkLaunchStatic()){
-            Handler(Looper.getMainLooper()).postDelayed({
+        viewModel.liveNext.observe(viewLifecycleOwner,{
+            if (settings.checkLaunchStatic()){
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToMainFragment())
-            },3000)
-        }else{
-            Handler(Looper.getMainLooper()).postDelayed({
+            }else{
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToViewPagerFragment())
-            },3000)
-        }
+            }
+        })
     }
 }

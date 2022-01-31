@@ -23,7 +23,7 @@
     <string name="information_description">Before using the application, you need to give permission for the location and for reading contacts, since the application will not work without these permissions.</string>
     <string name="sms_text_english">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
-    <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_uz">Siz mening favqulodda vaziyatlarda aloqaga chiquvchi shaxsimsiz, mening tahminiy joylashuvim: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="contacts_was_added">Contacts was added</string>
     <string name="text_first_instruction">Create an \nemergency\n contact’s list</string>

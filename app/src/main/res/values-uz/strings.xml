@@ -23,7 +23,7 @@
     <string name="information_description">Ilovadan foydalanishdan oldin locatsiya va kontaktlarni o\'qish uchun ruxsat berishingiz kerak, chunki ilova ushbu ruxsatlarsiz ishlamaydi.</string>
     <string name="permission">Ruxsat</string>
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
-    <string name="sms_text_uz">Siz mening kontaktimdasiz. Menga sizdan yordam kerak, teziroq. Men joylashgan o\'rin: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="sms_text_uz">Siz mening favqulodda vaziyatlarda aloqaga chiquvchi shaxsimsiz, mening tahminiy joylashuvim: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="contacts_was_added">Kontaktlar qo\'shildi</string>
     <string name="text_first_instruction">Favqulodda kontaktlar ro\'yxatini yaratish</string>
