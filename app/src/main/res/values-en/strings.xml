@@ -6,6 +6,7 @@
     <string name="cancel">Cancel</string>
     <string name="go_to_settings">Settings</string>
     <string name="change_language">Change language</string>
+    <string name="change_status">Change status</string>
     <string name="information">Information</string>
     <string name="settings">Settings</string>
     <string name="information_message">3 tap instant click on block button, activates SOS mailing.\n\nIf you consider support us, please contact brighterDeeds@gmail.com</string>
@@ -15,6 +16,7 @@
     <string name="select_contact">You haven\'t been choose contact</string>
     <string name="stop_sent_sms">Disable SMS mailing</string>
     <string name="yes">Yes</string>
+    <string name="copied">Your location is copied</string>
     <string name="no">No</string>
     <string name="sms_stop_dialog">Do you really want to stop sending SMS messages?</string>
     <string name="warning">Turn on GPS or mobile internet, without this the application will not work!</string>
@@ -30,5 +32,5 @@
     <string name="text_second_instruction">If an emergency \noccurs press the \n power button 4 \ntimes in less than\n 3.5 seconds.</string>
     <string name="text_third_instruction">app will send your \ncurrent GPS \nlocation and help \nmessage to your \ncreated contact \nlist.</string>
     <string name="start">START</string>
->>>>>>> Stashed changes
+    <string name="input_status">Input your status</string>
 </resources>

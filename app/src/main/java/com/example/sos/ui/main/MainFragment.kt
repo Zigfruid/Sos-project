@@ -2,6 +2,7 @@ package com.example.sos.ui.main
 
 import android.Manifest
 import android.content.*
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
@@ -9,13 +10,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -27,19 +30,18 @@ import com.example.sos.core.extentions.*
 import com.example.sos.core.model.SMSHelper
 import com.example.sos.core.model.Settings
 import com.example.sos.databinding.FragmentMainBinding
+import com.example.sos.service.Actions
+import com.example.sos.service.LockService
 import com.example.sos.ui.MainActivity
+import com.example.sos.utils.LocationHelper
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
-import com.example.sos.service.Actions
-import com.example.sos.service.LockService
-import com.google.android.gms.common.api.ApiException
-
+import android.content.ClipboardManager
+import android.widget.PopupMenu
+import com.example.sos.databinding.DialogStatusBinding
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainFragment: Fragment(R.layout.fragment_main) {
@@ -52,6 +54,8 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private val settings: Settings by inject()
     var isSelected = false
     var isGranted = true
+    private val prefs: Settings by inject()
+    private val location: LocationHelper by inject()
 
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 10000
@@ -100,43 +104,46 @@ class MainFragment: Fragment(R.layout.fragment_main) {
               actionOnService(Actions.START)
             },1000)
         }
-        binding.btnSettings.onClick {
-            val dialogLanguages = AlertDialog.Builder(requireContext())
-            dialogLanguages.setTitle(getString(R.string.change_language))
-            val languages = arrayOf(getString(R.string.russian_language),
-                getString(R.string.karakalpak_language),
-                getString(R.string.uzbek_language),
-                getString(R.string.english_language))
-            dialogLanguages.setSingleChoiceItems(languages,settings.getPosition()) { _, i ->
-                selectedLanguage = languages[i]
-                settings.setPosition(i)
-
+        binding.apply {
+            stop.setOnClickListener {
+                if (prefs.isServiceRunning) {
+                    prefs.isServiceRunning = false
+                    stopImage.setImageResource(R.drawable.turn_off)
+                    stopService()
+                } else {
+                    prefs.isServiceRunning = true
+                    stopImage.setImageResource(R.drawable.turn_on)
+                    startService()
+                }
             }
-            dialogLanguages.setPositiveButton(HtmlCompat.fromHtml("<font color='#303B01'>Ok</font>",HtmlCompat.FROM_HTML_MODE_LEGACY)){ _, _->
-                when(selectedLanguage){
-                    getString(R.string.russian_language) ->{
-                        settings.setLanguage("ru")
-                        setLocale()
-                        settings.setFirstLanguageSelected()
+            copyLocation.setOnClickListener {
+                location.getLocation()
+                val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val clip = ClipData.newPlainText("My current Location", getString(R.string.location_copy, location.latitude.toString(), location.longitude.toString()))
+                try {
+                    clipboard!!.setPrimaryClip(clip)
+                    Toast.makeText(requireContext(), getString(R.string.copied), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        binding.btnSettings.onClick {
+            val popupMenu = PopupMenu(requireContext(), it)
+            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.language -> {
+                        changeLanguage()
+                        return@setOnMenuItemClickListener true
                     }
-                    getString(R.string.karakalpak_language) ->{
-                        settings.setLanguage("kaa")
-                        setLocale()
-                        settings.setFirstLanguageSelected()
-                    }
-                    getString(R.string.uzbek_language) ->{
-                        settings.setLanguage("uz")
-                        setLocale()
-                        settings.setFirstLanguageSelected()
-                    }
-                    getString(R.string.english_language) ->{
-                        settings.setLanguage("en")
-                        setLocale()
-                        settings.setFirstLanguageSelected()
+                    else -> {
+                        changeStatus()
+                        return@setOnMenuItemClickListener true
                     }
                 }
             }
-            dialogLanguages.show()
+            popupMenu.show()
         }
 
         binding.btnShare.onClick {
@@ -156,29 +163,84 @@ class MainFragment: Fragment(R.layout.fragment_main) {
         }
     }
 
+    private fun changeStatus() {
+        val dialogStatus = AlertDialog.Builder(requireContext())
+        val mBinding = DialogStatusBinding.inflate(LayoutInflater.from(requireContext()))
+        dialogStatus.setTitle(getString(R.string.change_status))
+        dialogStatus.setView(mBinding.root)
+        dialogStatus.setPositiveButton(HtmlCompat.fromHtml("<font color='#303B01'>Ok</font>",HtmlCompat.FROM_HTML_MODE_LEGACY)){ _, _->
+            mBinding.apply {
+                if (!statusDialog.text.isNullOrEmpty()) {
+                    settings.status = statusDialog.text.toString()
+                    stopService()
+                    startService()
+                }
+            }
+        }
+        dialogStatus.show()
+    }
+
+    private fun changeLanguage() {
+        val dialogLanguages = AlertDialog.Builder(requireContext())
+        dialogLanguages.setTitle(getString(R.string.change_language))
+        val languages = arrayOf(getString(R.string.russian_language),
+            getString(R.string.karakalpak_language),
+            getString(R.string.uzbek_language),
+            getString(R.string.english_language))
+        dialogLanguages.setSingleChoiceItems(languages,settings.getPosition()) { _, i ->
+            selectedLanguage = languages[i]
+            settings.setPosition(i)
+        }
+        dialogLanguages.setPositiveButton(HtmlCompat.fromHtml("<font color='#303B01'>Ok</font>",HtmlCompat.FROM_HTML_MODE_LEGACY)){ _, _->
+            when(selectedLanguage){
+                getString(R.string.russian_language) ->{
+                    settings.setLanguage("ru")
+                    setLocale()
+                    settings.setFirstLanguageSelected()
+                }
+                getString(R.string.karakalpak_language) ->{
+                    settings.setLanguage("kaa")
+                    setLocale()
+                    settings.setFirstLanguageSelected()
+                }
+                getString(R.string.uzbek_language) ->{
+                    settings.setLanguage("uz")
+                    setLocale()
+                    settings.setFirstLanguageSelected()
+                }
+                getString(R.string.english_language) ->{
+                    settings.setLanguage("en")
+                    setLocale()
+                    settings.setFirstLanguageSelected()
+                }
+            }
+        }
+        dialogLanguages.show()
+    }
+
 
     private fun setObservers(){
-        viewModel.contacts.observe(viewLifecycleOwner, {
-            when(it.status){
-                ResourceState.LOADING->{
+        viewModel.contacts.observe(viewLifecycleOwner) {
+            when (it.status) {
+                ResourceState.LOADING -> {
                     binding.progressBar.visibility(true)
                 }
-                ResourceState.SUCCESS->{
+                ResourceState.SUCCESS -> {
                     binding.progressBar.visibility(false)
-                    if (it.data!!.isNotEmpty()){
+                    if (it.data!!.isNotEmpty()) {
                         binding.tvDescription.visibility = View.GONE
-                    }else{
+                    } else {
                         binding.tvDescription.visibility = View.VISIBLE
                     }
                     adapter.models = it.data
                     isSelected = true
                 }
-                ResourceState.ERROR->{
+                ResourceState.ERROR -> {
                     binding.progressBar.visibility(false)
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
     }
 
     private fun setLocale() {
@@ -239,11 +301,20 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 if (!it.value) isGranted = false
             }
             if (isGranted) {
-                requireContext().startService(Intent(requireContext(), LockService::class.java))
+                startService()
             }else{
                 showDialog()
             }
         }
+
+    private fun startService() {
+        requireContext().startService(Intent(requireContext(), LockService::class.java))
+    }
+
+    private fun stopService() {
+        val intent = Intent(requireActivity(), LockService::class.java)
+        requireActivity().stopService(intent)
+    }
 
     private fun showDialog() {
         val builder = AlertDialog.Builder(requireContext())
@@ -303,4 +374,6 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             dialog.show()
         }
     }
+
+
 }

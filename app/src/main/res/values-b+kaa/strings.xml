@@ -6,6 +6,7 @@
     <string name="cancel">Biykar etiw</string>
     <string name="go_to_settings">Sazalamalar</string>
     <string name="change_language">Til almastırıw</string>
+    <string name="change_status">Statustı ózgertiw</string>
     <string name="information">Informaciya</string>
     <string name="settings">Sazalamalar</string>
     <string name="information_message">Блоклаў кнопкасын тезлик пенен үш мәрте басыў аркалы SOS хабарнамасын жибериў әмелге асырылады.</string>
@@ -15,6 +16,7 @@
     <string name="select_contact">Siz ele kontakt saylamadiniz</string>
     <string name="stop_sent_sms">Sos sms jiberiwdi toxtatiw</string>
     <string name="yes">Awa</string>
+    <string name="copied">Siziń lokaciyańız nusqalandı</string>
     <string name="no">Joq</string>
     <string name="sms_stop_dialog">Siz, álbette, SMS-xabardı toqtatıwchimisiz?</string>
     <string name="warning">GPS yaki mobil internetni jagin, bolmasa dastur islemeydi!</string>
@@ -30,4 +32,5 @@
     <string name="text_second_instruction">Ayrıqsha jaǵdayda \n3. 5 sekund waqıt ishinde \n4 ret bloklaw túymesin \nbasıń.</string>
     <string name="text_third_instruction">Programma siziń ámeldegi GPS adresıńızdı hám \njárdem sorawshı xabardı \nsiz jaratqan kontaktlar dizimine jiberedi</string>
     <string name="start">BASLAW</string>
+    <string name="input_status">Statusıńızdı kiritiń</string>
 </resources>

@@ -43,7 +43,6 @@ class SmsSentReceiver : BroadcastReceiver() {
             Log.e("LOB", "Time : ${SMSHelper.stopSendSms}")
             if(!SMSHelper.stopSendSms){
                 SMSHelper.send()
-
             }
         }
     }

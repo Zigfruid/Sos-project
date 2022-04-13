@@ -6,6 +6,7 @@
     <string name="cancel">Отмена</string>
     <string name="go_to_settings">Настройки</string>
     <string name="change_language">Сменить язык</string>
+    <string name="change_status">Изменить статус</string>
     <string name="information">Информация</string>
     <string name="settings">Настройки</string>
     <string name="information_message">Трех кратное быстрое нажатие на кнопку блокировки, активирует рассылку SOS сообщений.\n\n Если вы хотите поддержать нас, пожалуйста, свяжитесь с brighterDeeds@gmail.com</string>
@@ -16,6 +17,7 @@
     <string name="stop_sent_sms">Отключить СМС рассылку</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="copied">Ваша локация скопирована</string>
     <string name="sms_stop_dialog">Вы действительно хотите остановить СМС-рассылку?</string>
     <string name="warning">Включите GPS или мобильный интернет, без этого приложение не будет работать!</string>
     <string name="add_contacts">Добавить в SOS лист</string>
@@ -31,4 +33,5 @@
     <string name="text_second_instruction">В случае возникновения \nчрезвычайной ситуации \nнажмите кнопку питания \n4 раза менее чем за 3,5 секунды.</string>
     <string name="text_third_instruction">Приложение отправит \nваше текущее местоположение GPS и справочное сообщение \nв созданный вами  \n список контактов.</string>
     <string name="start">НАЧАТЬ</string>
+    <string name="input_status">Введите ваш статус</string>
 </resources>

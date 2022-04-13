@@ -3,14 +3,15 @@ package com.example.sos.core.broadcast
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import com.example.sos.service.Actions
 import com.example.sos.service.LockService
 import com.example.sos.service.ServiceState
 import com.example.sos.service.getServiceState
+import org.koin.java.KoinJavaComponent.inject
 
 class StartReceiver : BroadcastReceiver() {
-
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED && getServiceState(context) == ServiceState.STOPPED) {
             Intent(context, LockService::class.java).also {
@@ -23,4 +24,5 @@ class StartReceiver : BroadcastReceiver() {
             }
         }
     }
+
 }

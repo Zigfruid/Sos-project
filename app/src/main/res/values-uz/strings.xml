@@ -6,6 +6,7 @@
     <string name="cancel">"Bekor etish "</string>
     <string name="go_to_settings">Sozalamalar</string>
     <string name="change_language">"Til almashtirish "</string>
+    <string name="change_status">Statusni o\'zgartirish</string>
     <string name="information">"Axborot "</string>
     <string name="settings">Sozalamalar</string>
     <string name="information_message">Блоклаш тугмасини тезлик билан уч марта босиш орқали SOS хабарномасини жўнатиш амалга оширилади.\n\nAgar bizni qo\'llab - quvvatlashni istasangiz, iltimos, murojaat qiling brighterDeeds@gmail.com</string>
@@ -22,6 +23,7 @@
     <string name="add_contacts">Qutqaruvchilar ro\'yhatini tu\'zish</string>
     <string name="information_description">Ilovadan foydalanishdan oldin locatsiya va kontaktlarni o\'qish uchun ruxsat berishingiz kerak, chunki ilova ushbu ruxsatlarsiz ishlamaydi.</string>
     <string name="permission">Ruxsat</string>
+    <string name="copied">Sizning lokatsiyangiz nusxalandi</string>
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_uz">Siz mening favqulodda vaziyatlarda aloqaga chiquvchi shaxsimsiz, mening tahminiy joylashuvim: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
@@ -30,4 +32,5 @@
     <string name="text_second_instruction">Favqulodda holatda \n3.5 soniya vaqt ichida \n4 marta bloklash \ntugmasini bosing.</string>
     <string name="text_third_instruction">Ilova sizning joriy GPS manzilingizni va yordam so\'rovchi xabarni siz yaratgan kontaktlar ro\'yxatiga yuboradi</string>
     <string name="start">BOSHLASH</string>
+    <string name="input_status">Statusingizni kiriting</string>
 </resources>

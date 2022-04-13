@@ -6,6 +6,7 @@
     <string name="cancel">Cancel</string>
     <string name="go_to_settings">Settings</string>
     <string name="change_language">Change language</string>
+    <string name="change_status">Change status</string>
     <string name="information">Information</string>
     <string name="settings">Settings</string>
     <string name="russian_language" translatable="false">Русский</string>
@@ -23,10 +24,12 @@
     <string name="background_work" translatable="false">Be productive</string>
     <string name="sms_text_english">You are my emergency contact. I need some help. Here is my approximate location:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_rus">Вы мой экстренный контакт. Мне нужна помощь. Вот мое примерное местоположение:https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
+    <string name="location_copy" translatable="false">https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_uz">Siz mening favqulodda vaziyatlarda aloqaga chiquvchi shaxsimsiz, mening tahminiy joylashuvim: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="sms_text_kaa">Siz meniń jeke kontaktımdasız. Maǵan sizden járdem kerek, tezirek. Bul men turǵan jer: https://www.google.com/maps/dir/?api=1&amp;destination=%1$s,%2$s&amp;travelmode=driving</string>
     <string name="stop_sent_sms">Disable SMS mailing</string>
     <string name="yes">Yes</string>
+    <string name="copied">Your location is copied</string>
     <string name="no">No</string>
     <string name="sms_stop_dialog">Do you really want to stop sending SMS messages?</string>
     <string name="warning">Turn on GPS or mobile internet, without this the application will not work!</string>
@@ -38,4 +41,5 @@
     <string name="text_second_instruction">If an emergency occurs \npress the power button \n4 times in less \nthan 3.5 seconds.</string>
     <string name="text_third_instruction">App will send your \ncurrent GPS location \nand help message to your \ncreated contact list.</string>
     <string name="start">START</string>
+    <string name="input_status">Input your status</string>
 </resources>

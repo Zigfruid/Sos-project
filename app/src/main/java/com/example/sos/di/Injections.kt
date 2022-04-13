@@ -8,6 +8,7 @@ import com.example.sos.ui.contacts.ContactsViewModel
 import com.example.sos.ui.main.MainAdapter
 import com.example.sos.ui.main.MainFragmentViewModel
 import com.example.sos.ui.splash.SplashViewModel
+import com.example.sos.utils.LocationHelper
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -22,7 +23,7 @@ val localModule = module {
         get<ContactsBD>().daoContactList()
     }
     single { Settings(androidApplication().applicationContext) }
-
+    single { LocationHelper(androidApplication().applicationContext) }
 }
 
 val adapterModule = module {

@@ -39,6 +39,7 @@ import android.os.Vibrator
 import android.util.Log
 import com.example.sos.core.broadcast.StartReceiver
 import com.example.sos.core.model.Settings
+import com.example.sos.utils.LocationHelper
 
 
 class LockService: Service(), LocationListener{
@@ -50,7 +51,7 @@ class LockService: Service(), LocationListener{
 
     private val dao: ContactDao by inject()
     private var wakeLock: PowerManager.WakeLock? = null
-    private val mReceiver= ScreenReceiver()
+    private val mReceiver = ScreenReceiver()
     private var locationManager: LocationManager? = null
     private val CHANNEL_ID = "channel_id_example_01"
     private val notificationId = 101
@@ -59,20 +60,7 @@ class LockService: Service(), LocationListener{
     private lateinit var notification: Notification
     private var isServiceStarted = false
     private val settings:Settings by inject()
-    private var isGPSEnabled = false
-    var isNetworkEnabled = false
-    var isGPSTrackingEnabled = false
-    private var location: Location? = null
-    private var latitude = 0.0
-    private var longitude = 0.0
-
-    companion object {
-        private val TAG = LockService::class.java.name
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Long = 10 // 10 meters
-        private const val MIN_TIME_BW_UPDATES = (1000 * 60 * 1 // 1 minute
-                ).toLong()
-    }
-
+    private val location: LocationHelper by inject()
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -100,56 +88,7 @@ class LockService: Service(), LocationListener{
     override fun onCreate() {
         super.onCreate()
         notificationChannel()
-        getLocation()
-    }
-
-    private var provider_info: String? = null
-
-    private fun getLocation() {
-        try {
-            locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
-            isGPSEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            isNetworkEnabled = locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-            if (isGPSEnabled || isNetworkEnabled) {
-                isGPSTrackingEnabled = true
-                provider_info = LocationManager.GPS_PROVIDER
-                provider_info = LocationManager.NETWORK_PROVIDER
-
-                if (provider_info!!.isNotEmpty()) {
-                    if (ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        return
-                    }
-                    locationManager!!.requestLocationUpdates(
-                        provider_info!!,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(),
-                        this
-                    )
-                    if (locationManager != null) {
-                        location = locationManager!!.getLastKnownLocation(provider_info!!)
-                        updateGPSCoordinates()
-                    }
-                }
-            }
-            } catch (e: Exception) {
-                Log.e(TAG, "Impossible to connect to LocationManager", e)
-            }
-
-    }
-
-    private fun updateGPSCoordinates() {
-        if (location != null) {
-            latitude = location!!.latitude
-            longitude = location!!.longitude
-        }
+        location.getLocation()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -183,7 +122,7 @@ class LockService: Service(), LocationListener{
                     .subscribe(
                         {
                             context = this
-                            if (latitude!=0.0 && longitude!=0.0) {
+                            if (location.latitude!=0.0 && location.longitude!=0.0) {
                                 locationManager =
                                     getSystemService(LOCATION_SERVICE) as LocationManager
                                 if (ActivityCompat.checkSelfPermission(
@@ -199,23 +138,23 @@ class LockService: Service(), LocationListener{
                                 SMSHelper.text = when(settings.getLanguage()){
                                     "uz" -> getString(
                                         R.string.sms_text_uz,
-                                        latitude.toString(),
-                                        longitude.toString()
+                                        location.latitude.toString(),
+                                        location.longitude.toString()
                                     )
                                     "ru" -> getString(
                                         R.string.sms_text_rus,
-                                        latitude.toString(),
-                                        longitude.toString()
+                                        location.latitude.toString(),
+                                        location.longitude.toString()
                                     )
                                     "kaa" -> getString(
                                         R.string.sms_text_kaa,
-                                        latitude.toString(),
-                                        longitude.toString()
+                                        location.latitude.toString(),
+                                        location.longitude.toString()
                                     )
                                     else -> getString(
                                         R.string.sms_text_english,
-                                        latitude.toString(),
-                                        longitude.toString()
+                                        location.latitude.toString(),
+                                        location.longitude.toString()
                                     )
                                 }
                                 if (mReceiver.isReadyToSend) {
@@ -232,7 +171,7 @@ class LockService: Service(), LocationListener{
                                     mReceiver.isReadyToSend = false
                                 }
                             }else{
-                                getLocation()
+                                location.getLocation()
                             }
                         },
                         {
@@ -247,7 +186,7 @@ class LockService: Service(), LocationListener{
     fun notificationChannel() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
             val name = "agi"
-            val descriptor = getString(R.string.background_work)
+            val descriptor = settings.status
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptor
@@ -256,7 +195,7 @@ class LockService: Service(), LocationListener{
             mNotifyManager.createNotificationChannel(channel)
 
             mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentText(getString(R.string.background_work))
+                .setContentText(settings.status)
                 .setSmallIcon(R.drawable.icon_512)
                 .setOngoing(true)
             notification = mBuilder.build()
@@ -270,14 +209,14 @@ class LockService: Service(), LocationListener{
     private fun notifications() {
         if (Build.VERSION.SDK >= Build.VERSION_CODES.O.toString()) {
             mBuilder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
+                .setContentText(settings.status)
             mNotifyManager.notify(notificationId, mBuilder.build())
             startForeground(notificationId, notification)
         } else {
             mNotifyManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val builder: Notification.Builder = Notification.Builder(this)
             builder.setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.background_work))
+                .setContentText(settings.status)
             notification = builder.build()
             startForeground(notificationId, notification)
         }
