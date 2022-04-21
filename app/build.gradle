@@ -12,8 +12,8 @@ android {
         applicationId "uz.texnopos.sos"
         minSdk 23
         targetSdk 30
-        versionCode 9
-        versionName "9.0"
+        versionCode 15
+        versionName "1.0.15"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
